@@ -1,6 +1,8 @@
 import React from 'react';
 import './App.css';
+import LoginPage from './components/pages/LoginPage';
 import MainPage from './components/pages/MainPage';
+import StartPage from './components/pages/StartPage';
 import AppContextProvider from './contexts/AppContext';
 
 function App() {
@@ -10,11 +12,16 @@ function App() {
   return (
     <AppContextProvider>
       <div className="App">
-        
 
+        <StartPage>
+          
+        </StartPage>
         <MainPage>
 
         </MainPage>
+        <LoginPage>
+
+        </LoginPage>
         
       </div>
     </AppContextProvider>
