@@ -1,0 +1,16 @@
+.Navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    padding: 5px 15px 5px 5px;
+    background: rgb(0, 0, 0, .7);
+}
+
+.Navbar__logo {
+    height: 3rem;
+}
+
+.Navbar__user {
+    max-height: 40px;
+}

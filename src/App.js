@@ -1,9 +1,14 @@
 import React from 'react';
-import './App.css';
-import LoginPage from './components/pages/LoginPage';
-import MainPage from './components/pages/MainPage';
-import StartPage from './components/pages/StartPage';
+import './styles/App.css';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 import AppContextProvider from './contexts/AppContext';
+
+import LoginPage from './pages/LoginPage';
+import MainPage from './pages/MainPage';
+import StartPage from './pages/StartPage';
+import SearchPage from './pages/SearchPage'
+import UserPage from './pages/UserPage';
+import Navbar from './components/Navbar';
 
 function App() {
 
@@ -11,18 +16,22 @@ function App() {
 
   return (
     <AppContextProvider>
-      <div className="App">
+      <Router>
+        <div className="App">
+          <Navbar/>
+ 
+          <Switch>
+            <Route path="/" exact component={StartPage}/>
+            <Route path="/login" component={LoginPage}/>
+            <Route path="/main" component={MainPage}/>
+            <Route path="/user" component={UserPage}/>
+            <Route path="/search" component={SearchPage}/>
+          </Switch>
 
-        <StartPage>
-          
-        </StartPage>
-        <MainPage>
+        </div>
+      </Router>
+      <div className="footer">
 
-        </MainPage>
-        <LoginPage>
-
-        </LoginPage>
-        
       </div>
     </AppContextProvider>
   );
