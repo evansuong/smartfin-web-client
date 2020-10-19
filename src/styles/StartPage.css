@@ -1,0 +1,41 @@
+.start-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.start-page__title {
+    display: flex;
+    align-items: baseline;
+    top: 250px;
+    position: absolute;
+    transition-duration: .5s;
+}
+
+.title__large {
+    max-width: 60vw;
+}
+
+.title__subtitle {
+    font-size: 2.5vw;
+}
+
+.start-page__btn {
+    transition-duration: .5s;
+    border-color: white;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    padding: 5px;
+}
+
+.start-page__login {
+    height: 40vh;
+    width: 40vw;
+    background-color: white;
+    transition-duration: .5s;
+    position: absolute;
+    top: 300px;
+}

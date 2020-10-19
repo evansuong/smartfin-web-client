@@ -8,7 +8,7 @@
 }
 
 .Navbar__logo {
-    height: 3rem;
+    max-height: 50px;
 }
 
 .Navbar__user {

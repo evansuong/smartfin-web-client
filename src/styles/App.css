@@ -1,9 +1,22 @@
-.App {
+.app {
   text-align: center;
-  background-image: url('../res/background.jpg');
+  background-image: url('../res/background.png');
   background-repeat: no-repeat;
   background-size: cover;
-  height: 100vh;
 }
 
+.app__page {
+  height: 95vh;
+  color: white;
+}
+
+div {
+  font-family: 'Montserrat', sans-serif;
+}
+
+a {
+  font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
+  color: white;
+}
 

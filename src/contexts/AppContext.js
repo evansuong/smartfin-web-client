@@ -6,6 +6,13 @@ const { createContext, useReducer } = require("react");
 export const AppContext = createContext()
 
 const AppState = {
+    lightStyle: {
+
+    },
+    darkStyle: {
+        
+    },
+    isLightTheme: true,
 }
 
 const AppContextProvider = (props) => {

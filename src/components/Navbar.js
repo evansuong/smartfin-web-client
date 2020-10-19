@@ -6,7 +6,7 @@ export default function Navbar() {
     return (
         <div className="Navbar">
             <Link to="/">
-                <img className="Navbar__logo" src={require("../res/logo_1.png")} alt="" />
+                <img className="Navbar__logo" src={require("../res/logo_img.png")} alt="" />
             </Link>
             <Link to="/user">
                 <img className="Navbar__user" src={require("../res/user_icon.png")} alt="" />
