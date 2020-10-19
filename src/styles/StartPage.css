@@ -6,10 +6,9 @@
     height: 80vh;
 }
 
-.start-page__title {
+.title {
     display: flex;
     align-items: baseline;
-    top: 250px;
     position: absolute;
     transition-duration: .5s;
 }
@@ -22,18 +21,20 @@
     font-size: 2.5vw;
 }
 
-.start-page__btn {
+.button {
     transition-duration: .5s;
     border-color: white;
     border-radius: 10px;
     border-width: 2px;
     border-style: solid;
     padding: 5px;
+    position: absolute;
+    top: 450px;
 }
 
-.start-page__login {
+.login-panel {
     height: 40vh;
-    width: 40vw;
+    min-width: 300px;
     background-color: white;
     transition-duration: .5s;
     position: absolute;

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import LoginPanel from '../components/LoginPanel'
 import '../styles/StartPage.css'
 
@@ -9,19 +8,20 @@ export default function StartPage() {
 
     const startPageStyle = clicked ? {
         title: {
-            top: '100px',
+            bottom: '560px',
         },
         btn: {
             opacity: '0',
         }, 
         login: {
-            transitionDelay: '.5s',
             opacity: '1',
+            transitionDelay: '.5s',
         }
     } : {
         title: {
-            top: '200px',
-            transitionDelay: '.5s',
+            bottom: '400px',
+            transitionDelay: '.1s',
+            transitionDuration: '1s',
         },
         btn : {
             transitionDelay: '.5s',
@@ -35,22 +35,24 @@ export default function StartPage() {
 
     return (
         <div className="start-page">
-            <div className="start-page__title" style={startPageStyle.title}>
+            <div className="title" style={startPageStyle.title}>
                 <img className="title__large" src={require("../res/title.png")}/>
                 <div className="title__subtitle">RIDE</div>
             </div>
 
         
             <div 
-                className="start-page__btn"
+                className="button"
                 style={startPageStyle.btn} 
-                onMouseDown={() => setClicked(true)} >
+                onMouseDown={() => setClicked(true)} 
+                >
                     Dive In
             </div>
             <div 
-                className="start-page__login"
+                className="login-panel"
                 style={startPageStyle.login}
-                onMouseLeave={() => setClicked(false)}>
+                onMouseLeave={() => setClicked(false)}
+                >
                     <LoginPanel onMouseLeave={() => setClicked(false)} clicked={clicked}></LoginPanel>
             </div>
         </div>

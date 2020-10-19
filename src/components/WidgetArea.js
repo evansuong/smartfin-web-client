@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function WidgetArea() {
     return (
-        <div>
+        <div className="widget-area">
             widgetArea
         </div>
     )
