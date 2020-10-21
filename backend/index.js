@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
-var config = require("./config")
 
 //set up express
 
@@ -23,3 +22,5 @@ mongoose.connect(process.env.MONGO_DB, {
   if (err) throw err;
   console.log("MongoDB connection established");
 });
+
+
