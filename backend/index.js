@@ -18,9 +18,13 @@ app.listen(PORT, () => console.log(`The server has started on PORT: ${PORT}`));
 mongoose.connect(process.env.MONGO_DB, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true
 }, (err) => {
   if (err) throw err;
   console.log("MongoDB connection established");
 });
 
+//set up Routes 
 
+//when e start with /users, use the userRouter router
+app.use("/users", require("./routes/userRouter"));
