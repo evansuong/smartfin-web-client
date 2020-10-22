@@ -2,7 +2,7 @@
 
 ---
 
-## Setup [^1]
+## Setup <sup>[1](#myfootnote1)</sup>
 
 1. In your editor, create a new file in the backend folder and name it ".env"
 1. Copy the contents of "sample.env" to ".env"
@@ -14,3 +14,5 @@
 1. Enter a user name and a password (leaving everything else as default) and press "Add User"
 1. Back in the ".env" file, replace **<FAKE_USER>** and **<FAKE_PASSWORD>** with your own user name and password
 1. Run "npm start" in the terminal. If the last message printed is "MongoDB connection established" you're good to go!
+
+<a name="myfootnote1">1</a>: Footnote content goes here
