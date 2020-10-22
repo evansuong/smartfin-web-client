@@ -3,11 +3,14 @@ import { Link } from 'react-router-dom'
 
 export default function UserPage() {
     return (
-        <h1>
-            user info page
+        <div>
+            <h1>
+                user info page
+            </h1>
             <Link to="/main">
                 back
             </Link>
-        </h1>
+        </div>
+        
     )
 }
