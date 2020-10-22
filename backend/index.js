@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
+const config = require("./config/config");
 
 //set up express
 
@@ -10,13 +10,13 @@ app.use(express.json()); //read JSON from web (JSON body parser)
 app.use(cors());
 
 //if a PORT has been assigned, use it, otherwise use port 9000
-const PORT = process.env.PORT || 9000;
+const PORT = process.env.PORT || config.app.port;
 app.listen(PORT, () => console.log(`The server has started on PORT: ${PORT}`));
 
 //set up Mongoose
 
 mongoose.connect(
-  process.env.MONGO_DB,
+  config.db_url,
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
