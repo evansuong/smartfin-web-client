@@ -8,7 +8,7 @@ export default function StartPage() {
 
     const startPageStyle = clicked ? {
         title: {
-            bottom: '560px',
+            bottom: '62vh',
         },
         btn: {
             opacity: '0',
@@ -16,10 +16,11 @@ export default function StartPage() {
         login: {
             opacity: '1',
             transitionDelay: '.5s',
+            zIndex: 999,
         }
     } : {
         title: {
-            bottom: '400px',
+            bottom: '50vh',
             transitionDelay: '.1s',
             transitionDuration: '1s',
         },
@@ -30,17 +31,21 @@ export default function StartPage() {
         },
         login: {
             opacity: '0',
+            zIndex:-1,
         }
     }
 
     return (
         <div className="start-page">
             <div className="title" style={startPageStyle.title}>
-                <img className="title__large" src={require("../res/title.png")}/>
+                <img 
+                    className="title__large" 
+                    src={require("../res/title.png")}
+                    alt="smartfin title"
+                />
                 <div className="title__subtitle">RIDE</div>
             </div>
 
-        
             <div 
                 className="button"
                 style={startPageStyle.btn} 

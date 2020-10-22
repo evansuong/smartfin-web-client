@@ -1,3 +1,14 @@
 .view-menu {
-    background-color: beige;
+    height: auto
+}
+
+.menu {
+   
+}
+
+@media(max-width: 768px) {
+    .view-menu {
+        justify-content: center;
+        align-items: center;
+    }
 }

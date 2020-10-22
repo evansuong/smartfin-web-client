@@ -18,14 +18,13 @@ a {
 }
 
 .app__page {
-  height: 95vh;
+  height: auto;
   color: white;
 }
 
 .footer {
   background-color: black;
-  padding: 20px;
-  height: 200px;
+  padding: 40px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
@@ -34,7 +33,7 @@ a {
 .footer__icon {
   justify-self: center;
   height: 100px;
-  margin-top: -5px;
+  margin: 30px;
 }
 
 .footer__links {
@@ -42,4 +41,18 @@ a {
   flex-direction: column;
   justify-content: center;
   justify-self: right;
+}
+
+@media(max-width: 768px) {
+  .footer {
+    height: 200px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .footer__links {
+    flex-direction: row;
+    justify-content: space-evenly;
+    justify-self: center;
+  }
 }

@@ -1,9 +1,9 @@
 .main-page {
-    height: 100vh;
+    height: auto;
 }
 
 .header {
-    background-color: blue;
+    background-color: #04213bff;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -14,7 +14,18 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    padding: 1vh;
 }
+
+.title__id {
+    font-weight: 100;
+}
+
+.title__location {
+    font-weight: 500;
+    font-size: x-large;
+}
+
 
 .title__name {
 
@@ -25,7 +36,12 @@
 }
 
 .body {
-    background-color: green;
     display: flex;
-    height: 100vh;
+    height: auto;
+}
+
+@media(max-width: 768px) {
+    .body {
+        flex-direction: column;
+    }
 }
