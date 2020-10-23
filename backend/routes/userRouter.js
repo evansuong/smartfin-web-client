@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const functions = require("../functions/registration_functions");
+
+
 router.post("/register", async (req, res) => {
   try {
     const { email, password, passwordCheck, displayName } = req.body;
