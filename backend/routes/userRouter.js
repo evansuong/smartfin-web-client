@@ -1,8 +1,16 @@
 const router = require("express").Router();
+const functions = require("../functions/registration_functions");
 const user = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 router.post("/register", async (req, res) => {
   try {
+    const { email, password, passwordCheck, displayName } = req.body;
+
+    const savedUser = await functions.registerNewUser(email, password, passwordCheck, displayName, res);
+
+    res.json(savedUser);
+
+    /** 
     var realDisplayName = "";
     const { email, password, passwordCheck, displayName } = req.body;
 
@@ -32,6 +40,7 @@ router.post("/register", async (req, res) => {
 
     const savedUser = await newUser.save();
     res.json(savedUser);
+    **/
 
   } catch (err) {
     res.status(500).json({ error: err.message });
