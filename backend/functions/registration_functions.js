@@ -6,19 +6,19 @@ async function hashing(password) {
   return await bcrypt.hash(password, await bcrypt.genSalt());
 }
 
-async function registerNewUser(email, password, passwordCheck, displayName) {
+async function registerNewUser(email, password, passwordCheck, displayName, res) {
   var realDisplayName = "";
 
   if (!email || !password || !passwordCheck)
-    return res.status(400).json({ msg: "Not all fields have been entered" });
+    return { msg: "Not all fields have been entered" };
 
   if (password.length < 8)
-    return res.status(400).json({ msg: "Password must be at least 8 characters long" });
+    return { msg: "Password must be at least 8 characters long" };
   if (password != passwordCheck)
-    return res.status(400).json({ msg: "Enter the same password twice" });
+    return { msg: "Enter the same password twice" };
   const existingUser = await User.findOne({ email: email })
   if (existingUser)
-    return res.status(400).json({ msg: "Account with user already exists" });
+    return { msg: "Account with user already exists" };
 
   if (!displayName)
     realDisplayName = email;
