@@ -7,7 +7,9 @@ export default function SearchPage() {
     return (
         <div className="search-page">
             {/* two components, ride list and input fields */}
-            search page
+            <h1>
+                search page
+            </h1>
             <Link to="/main">
                 back
             </Link>
