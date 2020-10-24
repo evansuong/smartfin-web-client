@@ -3,7 +3,7 @@ import './styles/App.css';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
 import AppContextProvider from './contexts/AppContext';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-
+import logo from './res/logo.png';
 import MainPage from './pages/MainPage';
 import StartPage from './pages/StartPage';
 import SearchPage from './pages/SearchPage'
@@ -18,7 +18,7 @@ const myTheme = createMuiTheme({
 })
 
 function App() {
-
+ 
   return (
     <AppContextProvider>
       <Router>
@@ -39,7 +39,7 @@ function App() {
               <Link to="/">
                 <img 
                   className="footer__icon" 
-                  src={require("./res/logo.png")} 
+                  src={logo} 
                   alt="link to homepage"
                 />
               </Link>

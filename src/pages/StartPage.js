@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import LoginPanel from '../components/LoginPanel'
 import '../styles/StartPage.css'
+import title from '../res/title.png'
 
 export default function StartPage() {
 
@@ -40,7 +41,7 @@ export default function StartPage() {
             <div className="title" style={startPageStyle.title}>
                 <img 
                     className="title__large" 
-                    src={require("../res/title.png")}
+                    src={title}
                     alt="smartfin title"
                 />
                 <div className="title__subtitle">RIDE</div>

@@ -22,7 +22,7 @@ export default function WidgetArea(props) {
         <div className="widget-area">
             {
                 Object.keys(widgetList).map((key, index) => (
-                    <div>{widgetList[key]['title']}</div>
+                    <div key={index}>{widgetList[key]['title']}</div>
                 ))
             }
         </div>
