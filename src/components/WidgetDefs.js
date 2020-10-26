@@ -2,7 +2,7 @@
 function widgetTemplate(title, body, gridItem) {
     return {
         titleText: title,
-        bodyContent: body,
+        bodyComponent: body,
         gridItem: gridItem
     }
 }

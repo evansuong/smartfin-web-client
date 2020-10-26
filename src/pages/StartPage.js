@@ -37,29 +37,44 @@ export default function StartPage() {
     }
 
     return (
-        <div className="start-page">
-            <div className="title" style={startPageStyle.title}>
-                <img 
-                    className="title__large" 
-                    src={title}
-                    alt="smartfin title"
-                />
-                <div className="title__subtitle">RIDE</div>
-            </div>
+        <div>
+            <div className="start-page__action-panel">
+                <div className="action-panel__title" style={startPageStyle.title}>
+                    <img 
+                        className="title__large" 
+                        src={title}
+                        alt="smartfin title"
+                    />
+                    <div className="title__subtitle">RIDE</div>
+                </div>
 
-            <div 
-                className="button"
-                style={startPageStyle.btn} 
-                onMouseDown={() => setClicked(true)} 
-                >
-                    Dive In
+                <div 
+                    className="button"
+                    style={startPageStyle.btn} 
+                    onMouseDown={() => setClicked(true)} 
+                    >
+                        Dive In
+                </div>
+                <div 
+                    className="login-panel"
+                    style={startPageStyle.login}
+                    onMouseLeave={() => setClicked(false)}
+                    >
+                        <LoginPanel onMouseLeave={() => setClicked(false)} clicked={clicked}></LoginPanel>
+                </div>
             </div>
-            <div 
-                className="login-panel"
-                style={startPageStyle.login}
-                onMouseLeave={() => setClicked(false)}
-                >
-                    <LoginPanel onMouseLeave={() => setClicked(false)} clicked={clicked}></LoginPanel>
+            <div className="start-page__info-panel">
+                <div className="info-panel__description">
+                    <p>smartfin lets us do cool stuff and were making a sick website</p>
+                </div>
+                <div className="info-panel__video">
+                    <iframe className="video"
+                        src="https://www.youtube.com/embed/rY145HV-ReM" 
+                        frameborder="0" 
+                        
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;" 
+                    />
+                </div>
             </div>
         </div>
     )

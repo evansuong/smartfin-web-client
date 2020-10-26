@@ -25,12 +25,12 @@ export default function WidgetArea(props) {
         <div className="widget-grid">
             {Object.keys(widgetList).map((key, index) => {
                 let widget = widgetList[key];
-                let {titleText, bodyContent, gridItem} = widget;
+                let {titleText, bodyComponent, gridItem} = widget;
                 return (<Widget 
                             key={index} 
                             gridItem={gridItem} 
                             titleText={titleText} 
-                            bodyContent={bodyContent} 
+                            bodyComponent={bodyComponent} 
                         />);  
             })}
        </div>
@@ -40,7 +40,7 @@ export default function WidgetArea(props) {
 // widget class defines a header and body content to show data
 function Widget(props) {
 
-    const { gridItem, titleText, bodyContent } = props
+    const { gridItem, titleText, bodyComponent } = props
 
     return (
         <div className={`widget ${gridItem}`}>
@@ -48,7 +48,7 @@ function Widget(props) {
                 {titleText}
             </div>
             <div className="widget__body">
-                {bodyContent}
+                {bodyComponent}
             </div> 
         </div>
     )
