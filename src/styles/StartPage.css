@@ -47,26 +47,25 @@
 
 
 .start-page__info-panel {
-    display: flex;
-    align-items: stretch;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     height: auto;
-    background-image: url("../res/videobg.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: white;
     margin-bottom: -4px;
+    padding: 30px;
 }
 
 .info-panel__description {
+    display: flex;
     justify-content: center;
-    background-color: rgba(0, 0, 0, .8);
-
-    padding: 30px;
+    align-items: center;
+    color: black;
+    font-weight: 500;
+    padding: 30px 50px;
 }
 
 .info-panel__video {
     width: 100%;
-
-    background-color: rgba(0, 0, 0, .8);
 }
 
 .video {
@@ -76,11 +75,14 @@
 
 @media(max-width: 768px) {
     .start-page__info-panel {
+        display: flex;
         flex-direction: column;
+        padding: 0px;
     }
 
     .video {
         width: 100vw;
-        height: auto;
+        height: 250px;
+        padding: 0px;
     }
 }

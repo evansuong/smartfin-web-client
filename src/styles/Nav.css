@@ -5,6 +5,8 @@
     height: 60px;
     padding: 5px 15px 5px 5px;
     background: rgb(0, 0, 0, .7);
+    position: sticky;
+    top: 0;
 }
 
 .Navbar__logo {
