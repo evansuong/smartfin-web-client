@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import './styles/App.css';
 import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
-import AppContextProvider from './contexts/AppContext';
+import { AppContext } from './contexts/AppContext';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import logo from './res/logo.png';
 import MainPage from './pages/MainPage';
@@ -10,19 +10,47 @@ import SearchPage from './pages/SearchPage'
 import UserPage from './pages/UserPage';
 import Navbar from './components/Navbar';
 
-const myTheme = createMuiTheme({
+const muiTheme = createMuiTheme({
   typography: {
     fontFamily: "Montserrat, sans-serif",
     textTransform: 'none',
-  }
+  },
+  palette: {
+    primary: {
+      main: "rgba(255, 255, 255, .4)",
+    }
+  },
+  props: {
+    // Name of the component
+    MuiButtonBase: {
+      // The properties to apply
+      disableRipple: true // No more ripple, on the whole application!
+    }
+  },
 })
 
 function App() {
- 
+
+  const { dispatch } = useContext(AppContext)
+
+  useEffect(() => {
+    window.matchMedia("(min-width: 768px)").addListener(handler)
+    dispatch({
+      type: "SET_WINDOW", 
+      payload: window.matchMedia('(max-width: 768px)').matches
+    })
+  }, [])
+  
+  function handler(e) {
+    dispatch({
+      type: "SET_WINDOW", 
+      payload: window.matchMedia('(max-width: 768px)').matches
+    })
+  }
+
   return (
-    <AppContextProvider>
       <Router>
-        <MuiThemeProvider theme={myTheme}>
+        <MuiThemeProvider theme={muiTheme}>
           <div className="app">
             <Navbar/>
             <div className="app__page">
@@ -52,7 +80,6 @@ function App() {
           </div>
         </MuiThemeProvider> 
       </Router>
-    </AppContextProvider>
   );
 }
 

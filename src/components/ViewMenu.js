@@ -1,13 +1,17 @@
-import React, { useEffect, useState} from 'react'
+import React, { useContext } from 'react'
 import '../styles/ViewMenu.css'
 import Tabs from '@material-ui/core/Tabs';
 import { makeStyles } from '@material-ui/core/styles' 
+import { AppContext } from '../contexts/AppContext';
 
 // styling for Tabs component
 const tabStyles = {
     root: {
         background: '#052848ff',
-        flexGrow: 1,
+        '&.PrivateTabIndicator-colorSecondary-4': 'white',
+        '&.PrivateTabIndicator-vertical-10': {
+            width: '100%',
+        }
     }
 }
 const useStyles = makeStyles(tabStyles);
@@ -16,24 +20,14 @@ const useStyles = makeStyles(tabStyles);
 // view menu component
 export default function ViewMenu(props) {
 
-    const { viewState, setViewState } = props;
-    const [matches, setMatches] = useState(window.matchMedia('(max-width: 768px)').matches);
+    const { appState } = useContext(AppContext);
+    const { isDesktopView } = appState;
+    const { currentView, setCurrentView } = props;
     const classes = useStyles(); // import tabs styles
-
-    console.log(window.matchMedia('(max-width: 768px)').matches)
-
-    function handler(e) {
-        console.log(e.matches)
-        setMatches(e.matches);
-    }
-
-    useEffect(() => {
-        window.matchMedia("(min-width: 768px)").addListener(handler)
-    }, [])
 
     // updates the view state in mainpage.js
     function handleChange(event, newValue) {
-        setViewState(newValue)
+        setCurrentView(newValue);
     }
 
     // props.children returns all the tabs declared in mainpage.js
@@ -41,10 +35,15 @@ export default function ViewMenu(props) {
         <div className="view-menu">
             <Tabs
                 className={`${classes.root} menu`}
-                orientation={matches ? "horizontal" : "vertical"}
+                orientation={isDesktopView ? "horizontal" : "vertical"}
                 onChange={handleChange}
-                value={viewState}
+                value={currentView}
                 variant="fullWidth"
+                indicatorColor="primary"
+                TabIndicatorProps={{
+                    style: isDesktopView ? { height: '100%' } : { width: '100%' } 
+                }}
+                disableTouchRipple
             >
                 {props.children}
             </Tabs>

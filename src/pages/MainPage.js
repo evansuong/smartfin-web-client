@@ -12,7 +12,7 @@ import '../styles/MainPage.css'
 export default function MainPage() {
 
     // view state of widget area
-    const [viewState, setViewState] = useState(0);
+    const [currentView, setCurrentView] = useState(0);
   
     // accessibility props for tabs
     function a11yProps(index) {
@@ -34,12 +34,12 @@ export default function MainPage() {
                 </Link>
             </div>
             <div className="body">
-                <ViewMenu viewState={viewState} setViewState={setViewState}>
+                <ViewMenu currentView={currentView} setCurrentView={setCurrentView}>
                     <Tab label="this" {...a11yProps(0)}/>
                     <Tab label="multiple" {...a11yProps(1)}/>
                     <Tab label="CDIP" {...a11yProps(2)}/>
                 </ViewMenu>
-                <WidgetArea viewState={viewState}/>                   
+                <WidgetArea currentView={currentView}/>                   
             </div>
         </div>
     )

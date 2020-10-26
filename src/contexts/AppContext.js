@@ -5,6 +5,7 @@ const { createContext, useReducer } = require("react");
 
 export const AppContext = createContext()
 
+// hold themes and current window size
 const AppState = {
     lightStyle: {
 
@@ -13,6 +14,7 @@ const AppState = {
         
     },
     isLightTheme: true,
+    isDesktopView: false,
 }
 
 const AppContextProvider = (props) => {

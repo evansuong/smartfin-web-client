@@ -26,18 +26,10 @@
     font-size: x-large;
 }
 
-
-.title__name {
-
-}
-
-.title__location {
-
-}
-
 .body {
     display: flex;
     height: auto;
+    background-color: rgba(255, 255, 255, .8);
 }
 
 @media(max-width: 768px) {
