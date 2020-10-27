@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const login = require("../middleware/login");
 const auth = require("../middleware/auth");
+const maintain = require("../middleware/maintain");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 
@@ -56,7 +57,7 @@ router.delete("/delete", async (req, res) => {
       return res.status(401).json({
         msg: "Access Denied"
       });
-    const userDeleted = await login.deleteUser(verifiedId);
+    const userDeleted = await maintain.deleteUser(verifiedId);
     res.json(userDeleted);
   }
   catch (err) {
