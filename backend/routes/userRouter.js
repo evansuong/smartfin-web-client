@@ -1,6 +1,6 @@
 const router = require("express").Router();
-const registration_functions = require("../functions/registration_functions");
-const functions = require("../functions/registration_functions");
+const login = require("../middleware/login");
+const auth = require("../middleware/auth");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 
@@ -9,7 +9,7 @@ router.post("/register", async (req, res) => {
   try {
     const { email, password, passwordCheck, displayName } = req.body;
 
-    const savedUser = await functions.registerNewUser(email, password, passwordCheck, displayName);
+    const savedUser = await login.registerNewUser(email, password, passwordCheck, displayName);
 
     if (savedUser.hasOwnProperty("msg")) {
       res.status(400).json(savedUser);
@@ -28,7 +28,7 @@ router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    const user = await registration_functions.login(email, password);
+    const user = await login.login(email, password);
 
     if (user == null)
       return res.status(400).json({ msg: "Check email/password" });
@@ -48,5 +48,21 @@ router.post("/login", async (req, res) => {
     console.log(err);
   }
 })
+
+router.delete("/delete", async (req, res) => {
+  try {
+    const verifiedId = await auth.auth(req.header("auth-token"));
+    if (verifiedId == null)
+      return res.status(401).json({
+        msg: "Access Denied"
+      });
+    const userDeleted = await login.deleteUser(verifiedId);
+    res.json(userDeleted);
+  }
+  catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log(err);
+  }
+});
 
 module.exports = router;
