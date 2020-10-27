@@ -45,7 +45,7 @@ async function registerNewUser(email, password, passwordCheck, displayName,) {
   const newUser = new User({
     email,
     password: hash,
-    realDisplayName
+    displayName: realDisplayName
   });
 
   //save to database 
@@ -54,8 +54,30 @@ async function registerNewUser(email, password, passwordCheck, displayName,) {
 
 }
 
+async function login(email, password) {
+  if (!email || !password)
+    return { msg: "Not all fields have been entered" };
+
+  const loginUser = await user.findOne({
+    email: email
+  })
+
+  if (!loginUser) {
+    return null;
+  }
+
+  const passwordMatch = await bcrypt.compare(password, loginUser.password);
+
+  if (!passwordMatch)
+    return null;
+
+  return loginUser;
+
+}
+
 module.exports = {
-  registerNewUser
+  registerNewUser,
+  login
 };
 
 
