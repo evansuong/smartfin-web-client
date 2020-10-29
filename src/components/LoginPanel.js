@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
 import '../styles/LoginPanel.css';
 
