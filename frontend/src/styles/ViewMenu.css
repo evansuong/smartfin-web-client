@@ -1,0 +1,11 @@
+.view-menu {
+    background-color: #052848ff;
+}
+
+
+@media(max-width: 768px) {
+    .view-menu {
+        justify-content: center;
+        align-items: center;
+    }
+}
