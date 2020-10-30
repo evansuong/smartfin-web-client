@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import '../styles/WidgetArea.css'
+import HeightChart from '../widgets/HeightChart';
 
 import TemplateWidget from '../widgets/TemplateWidget';
+
 
 // build a widget
 function widgetTemplate(title, body, gridItem, qString) {
@@ -13,11 +15,12 @@ function widgetTemplate(title, body, gridItem, qString) {
     }
 }
 
+
 // list of all widgets in their corresponding views
 const Widgets = {
     ride: {
         rideWidget1: widgetTemplate('RideWidget1', TemplateWidget, 'main', ''),
-        rideWidget2: widgetTemplate('RideWidget2', TemplateWidget, 'side', ''),
+        rideWidget2: widgetTemplate('RideWidget2', HeightChart, 'side', ''),
         rideWidget3: widgetTemplate('RideWidget3', TemplateWidget, 'left-square', ''),
         rideWidget4: widgetTemplate('RideWidget4', TemplateWidget, 'right-square', ''),
     },
