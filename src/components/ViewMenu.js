@@ -1,8 +1,10 @@
-import React, { useContext } from 'react'
-import '../styles/ViewMenu.css'
-import Tabs from '@material-ui/core/Tabs';
-import { makeStyles } from '@material-ui/core/styles' 
+import React, { useContext } from 'react';
 import { AppContext } from '../contexts/AppContext';
+import PropTypes from 'prop-types';
+
+import '../styles/ViewMenu.css';
+import Tabs from '@material-ui/core/Tabs';
+import { makeStyles } from '@material-ui/core/styles';
 
 // styling for Tabs component
 const tabStyles = {
@@ -15,7 +17,6 @@ const tabStyles = {
     }
 }
 const useStyles = makeStyles(tabStyles);
-
 
 // view menu component
 export default function ViewMenu(props) {
@@ -50,3 +51,11 @@ export default function ViewMenu(props) {
         </div>
     )
 }
+
+// check data types of props
+ViewMenu.propTypes = {
+    currentView: PropTypes.number,
+    setCurrentView: PropTypes.func,
+}
+
+

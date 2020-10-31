@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import LoginPanel from '../components/LoginPanel'
 import '../styles/StartPage.css'
 import title from '../res/title.png'
 
 
-export default function StartPage() {
+export default function StartPage({ history }) {
 
     const [clicked, setClicked] = useState(false)
 
@@ -53,7 +53,7 @@ export default function StartPage() {
                     className="button"
                     style={startPageStyle.btn} 
                     onMouseDown={() => setClicked(true)} 
-                    >
+                >
                         Dive In
                 </div>
                 <div 
@@ -61,9 +61,9 @@ export default function StartPage() {
                     style={startPageStyle.login}
                     onMouseLeave={() => setClicked(false)}
                 >
-                    <LoginPanel onMouseLeave={() => setClicked(false)} clicked={clicked}></LoginPanel>
+                    <LoginPanel history={history} onMouseLeave={() => setClicked(false)} clicked={clicked}></LoginPanel>
                 </div>
-            </div>'
+            </div>
          
             <div className="start-page__info-panel">
                 <div className="info-panel__description">

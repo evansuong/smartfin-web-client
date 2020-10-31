@@ -10,7 +10,7 @@ import searchIcon from '../res/search.webp';
 
 import '../styles/MainPage.css';
 
-
+// start page will get data from search page
 export default function MainPage() {
 
     // view state of widget area

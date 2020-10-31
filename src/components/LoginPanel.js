@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
 import '../styles/LoginPanel.css';
 
-export default function LoginPanel() {
+export default function LoginPanel({ history }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const handleSubmit = () => {
     console.log(username, password);
+    history.push("/main")
   };
   return (
     <div>
@@ -41,7 +42,7 @@ export default function LoginPanel() {
           />
         </FormControl>
       </form>
-      <Button style={{ marginTop: '10px' }} onClick={{ handleSubmit }}>
+      <Button style={{ marginTop: '10px' }} onClick={handleSubmit}>
         Login
       </Button>
     </div>

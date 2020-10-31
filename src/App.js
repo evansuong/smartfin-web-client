@@ -33,8 +33,11 @@ function App() {
 
   const { dispatch } = useContext(AppContext)
 
+  // on webpage startup, check if window is desktop or mobile dimensions
   useEffect(() => {
     window.matchMedia("(min-width: 768px)").addListener(handler)
+
+    // send the window size
     dispatch({
       type: "SET_WINDOW", 
       payload: window.matchMedia('(max-width: 768px)').matches

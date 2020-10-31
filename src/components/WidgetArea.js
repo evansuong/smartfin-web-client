@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react'
-import '../styles/WidgetArea.css'
+import React, { useEffect, useState } from 'react';
+import '../styles/WidgetArea.css';
 import HeightChart from '../widgets/HeightChart';
+
+import PropTypes from 'prop-types';
 
 import TemplateWidget from '../widgets/TemplateWidget';
 
@@ -48,6 +50,11 @@ const viewToWidgetType = {
     2: 'CDIP',
 }
 
+WidgetArea.propTypes = {
+    currentView: PropTypes.number,
+    currentRideData: {},
+}
+
 
 export default function WidgetArea(props) {
     
@@ -72,6 +79,10 @@ export default function WidgetArea(props) {
     )
 }
 
+// check proptypes
+WidgetArea.propTypes = {
+    currentView: PropTypes.number,
+}
 
 
 
@@ -93,4 +104,9 @@ function Widget(props) {
             </div> 
         </div>
     )
+}
+
+// fill this when we figure out ride data
+Widget.propTypes = {
+
 }
