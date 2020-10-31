@@ -45,7 +45,6 @@ export default function ViewMenu({ currentView, setCurrentView }) {
         };
     }
 
-
     // props.children returns all the tabs declared in mainpage.js
     return (
         <div className="view-menu">

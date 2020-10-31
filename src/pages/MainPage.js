@@ -4,29 +4,33 @@ import { Link } from 'react-router-dom';
 import ViewMenu from '../components/ViewMenu';
 import WidgetArea from '../components/WidgetArea';
 
-import Tab from '@material-ui/core/Tab';
+import useFetch from '../hooks/useFetch';
 
 import searchIcon from '../res/search.webp';
 
 import '../styles/MainPage.css';
 
 // start page will get data from search page
-export default function MainPage() {
+export default function MainPage({ rideData }) {
 
     // view state of widget area
     const [currentView, setCurrentView] = useState(0);
-    const [currentRideData, setcurrentRideData] = useState({});
+    const [currentRideData, setCurrentRideData] = useState({});
 
     // set the current ride data to default values for testing 
     // (TODO: REPLACE WITH REAL DATA)
-    useEffect(() => {
-        setcurrentRideData({
-            rideId: 'templateRide',
-            location: 'San Diego',
-            heightSmartfin: '100000',
-        })
-    }, [])
-  
+
+    function apiQuery(queryString) {
+        let rideData = {hi: "hi'"};
+        fetch(queryString)
+        .then(res => res.json())
+        .then(data => {
+            setCurrentRideData(data)
+        });
+        console.log('ey')
+    }
+
+    
     return (
         <div className="main-page">
 
@@ -34,8 +38,10 @@ export default function MainPage() {
             <div className="header">
                 <div className="header__title">
                     <div className="title__id">{currentRideData.rideId}</div>
-                    <div className="title__location">{currentRideData.location}</div>
+                    <div className="title__location">{currentRideData.loc1}</div>
                 </div>
+
+                <button onClick={() => apiQuery("https://lit-sands-95859.herokuapp.com/ride/ride-get/15692/")}>test query</button>
 
                 {/* search button routes to search page */}
                 <Link to="/search">
