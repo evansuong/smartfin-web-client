@@ -1,13 +1,13 @@
 import React from 'react';
 
 
-export default function TemplateWidget(props) {
+export default function TemplateWidget({ rideId, location, heightSmartfin }) {
    
-    const rideId = props.rideId;
-    
     return (
         <div>
             {rideId}
         </div>
     )
 }
+
+

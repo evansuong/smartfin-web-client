@@ -1,25 +1,33 @@
 import React, { useContext, useEffect } from 'react';
-import './styles/App.css';
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
 import { AppContext } from './contexts/AppContext';
+
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
+
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import logo from './res/logo.png';
+import './styles/App.css';
+
 import MainPage from './pages/MainPage';
 import StartPage from './pages/StartPage';
 import SearchPage from './pages/SearchPage'
 import UserPage from './pages/UserPage';
 import Navbar from './components/Navbar';
 
+
+// override default MaterialUI themes for MaterialUI components
 const muiTheme = createMuiTheme({
+  // change fonts
   typography: {
     fontFamily: "Montserrat, sans-serif",
     textTransform: 'none',
   },
+  // change colors
   palette: {
     primary: {
       main: "rgba(255, 255, 255, .4)",
     }
   },
+  // change props
   props: {
     // Name of the component
     MuiButtonBase: {
@@ -33,17 +41,18 @@ function App() {
 
   const { dispatch } = useContext(AppContext)
 
-  // on webpage startup, check if window is desktop or mobile dimensions
+  // on webpage startup, check if window is desktop or mobile dimensions for responsiveness
   useEffect(() => {
     window.matchMedia("(min-width: 768px)").addListener(handler)
 
-    // send the window size
+    // set global state
     dispatch({
       type: "SET_WINDOW", 
       payload: window.matchMedia('(max-width: 768px)').matches
     })
   }, [])
   
+  // check window size every time the window changes size
   function handler(e) {
     dispatch({
       type: "SET_WINDOW", 
@@ -57,6 +66,8 @@ function App() {
           <div className="app">
             <Navbar/>
             <div className="app__page">
+              
+              {/* page routes */}
               <Switch>
                 <Route path="/" exact component={StartPage}/>
                 <Route path="/main" component={MainPage}/>
@@ -65,6 +76,7 @@ function App() {
               </Switch>
             </div>
 
+            {/* footer with links to project related websites */}
             <div className="footer">
               <div></div>
               <Link to="/">

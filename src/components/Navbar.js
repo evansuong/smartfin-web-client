@@ -4,6 +4,10 @@ import '../styles/Nav.css'
 import logoImg from '../res/logo_img.png'
 import userIcon from '../res/user_icon.png'
 
+
+/**
+ *  Navbar gives links to the start page and the user page
+ */
 export default function Navbar() {
     return (
         <div className="Navbar">

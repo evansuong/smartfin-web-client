@@ -1,6 +1,6 @@
 
 
-
+// app reducer modifies global app state (theme and desktop/mobile view)
 export const AppReducer = (state, action) => {
 
     switch (action.type) {

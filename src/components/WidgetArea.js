@@ -7,7 +7,9 @@ import PropTypes from 'prop-types';
 import TemplateWidget from '../widgets/TemplateWidget';
 
 
-// build a widget
+/*
+ * this function simply formats a widget into a object
+ */
 function widgetTemplate(title, body, gridItem, qString) {
     return {
         titleText: title,
@@ -16,17 +18,36 @@ function widgetTemplate(title, body, gridItem, qString) {
         queryString: qString,
     }
 }
-
-
-// list of all widgets in their corresponding views
+// the data declared here is the same as ^^^
 const Widgets = {
     ride: {
-        rideWidget1: widgetTemplate('RideWidget1', TemplateWidget, 'main', ''),
-        rideWidget2: widgetTemplate('RideWidget2', HeightChart, 'side', ''),
-        rideWidget3: widgetTemplate('RideWidget3', TemplateWidget, 'left-square', ''),
-        rideWidget4: widgetTemplate('RideWidget4', TemplateWidget, 'right-square', ''),
+        rideWidget1: {
+            titleText: 'RideWidget1', 
+            bodyComponent: TemplateWidget, 
+            gridItem: 'main',
+            queryString: ''
+        },
+        rideWidget2: {
+            titleText: 'RideWidget2', 
+            bodyComponent: TemplateWidget, 
+            gridItem: 'side',
+            queryString: ''
+        },
+        rideWidget3: {
+            titleText: 'RideWidget3', 
+            bodyComponent: TemplateWidget, 
+            gridItem: 'left-square',
+            queryString: ''
+        },
+        rideWidget4: {
+            titleText: 'RideWidget4', 
+            bodyComponent: TemplateWidget, 
+            gridItem: 'right-square',
+            queryString: ''
+        },
     },
     multiple: {
+        // these declarations are the same as above i just got lazy
         multipleWidget1: widgetTemplate('MultipleWidget1', TemplateWidget, 'main', ''),
         multipleWidget2: widgetTemplate('MultipleWidget2', TemplateWidget, 'side', ''),
         multipleWidget3: widgetTemplate('MultipleWidget3', TemplateWidget, 'left-square', ''),
@@ -43,38 +64,36 @@ const Widgets = {
 
 
 /* WIDGET AREA COMPONENTS */
-// map current view number to view type
-const viewToWidgetType = {
+
+// map current view number prop to view type
+const viewToWidgetType = { 
     0: 'ride',
     1: 'multiple',
     2: 'CDIP',
 }
 
-WidgetArea.propTypes = {
-    currentView: PropTypes.number,
-    currentRideData: {},
-}
 
-
-export default function WidgetArea(props) {
+export default function WidgetArea({ currentView, currentRideData }) {
     
-    const { currentView, currentRideData } = props;
     const [widgetList, setWidgetList] = useState(Widgets['ride']);
     
     // set the view 
     useEffect(() => {
-        let viewToRender = viewToWidgetType[currentView]
+        let viewToRender = viewToWidgetType[currentView];
         setWidgetList(Widgets[viewToRender]);
     }, [currentView]);
 
     // map widgets in the current view to the widget area
     return (
         <div className="widget-grid">
+
+            {/* map all the widgets in widgetList to the area */}
             {Object.keys(widgetList).map((key, index) => {
                 let widgetData = widgetList[key];
                 return (
-                    <Widget key={index} data={{...widgetData, currentRideData}}/>);  
+                    <Widget key={index} {...widgetData} rideData={currentRideData}/>);  
             })}
+
        </div>
     )
 }
@@ -82,17 +101,15 @@ export default function WidgetArea(props) {
 // check proptypes
 WidgetArea.propTypes = {
     currentView: PropTypes.number,
+    currentRideData: PropTypes.object,
 }
 
 
 
 // widget class defines a header and body content to show data
-function Widget(props) {
+function Widget({ titleText, gridItem, bodyComponent, queryString, rideData  }) {
 
-    const { gridItem, titleText, bodyComponent, queryString, currentRideData } = props.data
     // const { rideApiFetch } = useFetch()
-
-    console.log(props)
 
     return (
         <div className={`widget ${gridItem}`}>
@@ -100,13 +117,17 @@ function Widget(props) {
                 {titleText}
             </div>
             <div className="widget__body">
-                {bodyComponent(currentRideData)}
+                {bodyComponent(rideData)}
             </div> 
         </div>
     )
 }
 
-// fill this when we figure out ride data
+// check proptypes
 Widget.propTypes = {
-
+    titleText: PropTypes.string,
+    gridItem: PropTypes.string,
+    queryString: PropTypes.string,
+    bodyComponent: PropTypes.func,
+    rideData: PropTypes.object,
 }
