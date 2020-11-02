@@ -51,7 +51,7 @@ export default function Searches(){
                 setData(item);
                 break;
             case "Random":
-                let count = 0
+                let count = parseInt(reqs)
                 pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/random/ride-get/${count}/`);
                 item = await pog.json();    
                 setData(item);
@@ -70,6 +70,12 @@ export default function Searches(){
                <label htmlFor="end">end date</label>
                <input type="date" name="end" value={req} onChange={e => setReq(e.target.value)}/> 
             </>
+    }if(type === "Random"){
+        inputFields =
+        <>
+            <label htmlFor="request">Count</label>
+            <input type="number" name="request" value={req} onChange={e => setReq(e.target.value)}/>
+        </> 
     }else{
         inputFields =
             <>
@@ -98,31 +104,25 @@ export default function Searches(){
             }
             break;
         case "Location":
+        case "Random":
             if(data.length > 0){
                 console.log("Location: ")
-                let count = 0;
                 let rides = data;
                 itemsToRender = rides.map( (rd) => {
-                    if (count < 10){
-                        return (
-                            <h3>{rd.rideId}</h3>
-                        )
-                    }
+                    return (
+                        <span>{rd.rideId} |  </span>
+                    )
                 } )
                 itemsToRender = 
                     <>
                         {itemsToRender}
-                        <Link to={`/main/${data.rideId}`} >
+                        <Link to={`/main/${data[0].rideID}`} >
                             <button>View Graphs!</button>
                         </Link>
                     </>   
             }
             break;
         case "Date":
-    
-            break;
-        case "Random":
-            // let count = 0
     
             break;
         default:
