@@ -2,3 +2,50 @@
     background-color: rgba(255, 255, 255, .8);
     width: stretch;
 }
+
+.widget-grid {
+    display: grid;
+    width: -webkit-fill-available;
+    grid-template-areas: 
+        "main main main side"
+        "main main main side"
+        "left-square left-square right-square right-square"
+        "left-square left-square right-square right-square";
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 0px 500px 0px 200px;
+    grid-auto-rows: 200px
+}
+
+.main {
+    grid-area: main;
+}
+
+.side {
+    grid-area: side;
+}
+
+.left-square {
+    grid-area: left-square;
+}
+
+.right-square {
+    grid-area: right-square;
+}
+
+.widget {
+    background-color: aliceblue;
+    color: black;
+    margin: 5px;
+}
+
+.widget__header {
+    color: blue;
+    font-weight: 700;
+}
+
+@media(max-width: 768px) {
+    .widget-grid {
+        display: flex;
+        flex-direction: column;
+    }
+}

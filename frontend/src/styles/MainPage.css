@@ -7,6 +7,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     padding: 10px;
 }
 
@@ -15,6 +16,10 @@
     flex-direction: column;
     align-items: flex-start;
     padding: 1vh;
+}
+
+.header__search {
+    padding: 10px;
 }
 
 .title__id {
@@ -26,18 +31,10 @@
     font-size: x-large;
 }
 
-
-.title__name {
-
-}
-
-.title__location {
-
-}
-
 .body {
     display: flex;
     height: auto;
+    background-color: rgba(255, 255, 255, .8);
 }
 
 @media(max-width: 768px) {
