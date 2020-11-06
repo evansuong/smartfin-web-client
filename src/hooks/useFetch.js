@@ -2,7 +2,7 @@
 
 function apiQuery(queryString) {
     let rideData = {hi: "hi'"};
-    () => fetch(queryString)
+    fetch(queryString)
     .then(res => res.json())
     .then(data => {
         console.log(data);
