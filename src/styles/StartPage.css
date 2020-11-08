@@ -26,11 +26,11 @@
 
 .button {
   transition-duration: 0.5s;
-  border-color: white;
-  border-radius: 10px;
-  border-width: 2px;
-  border-style: solid;
-  padding: 5px;
+  color: white;
+  background-color: rgba(0, 0, 0, .7);
+  border-radius: 50px;
+  font-weight: 550;
+  padding: 20px 50px;
   position: absolute;
   top: 55vh;
 }
@@ -39,15 +39,22 @@
   cursor: pointer;
 }
 
+
 .login-panel {
   height: 40vh;
-  min-width: 300px;
-  background-color: rgba(255, 255, 255, 0.5);
+  min-width: 400px;
+  background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(5px);
   transition-duration: 0.5s;
   position: absolute;
   top: 40vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
+
+
 
 .start-page__info-panel {
   display: grid;
