@@ -75,6 +75,7 @@ async function login(email, password) {
 
 }
 
+
 module.exports = {
   registerNewUser,
   login,

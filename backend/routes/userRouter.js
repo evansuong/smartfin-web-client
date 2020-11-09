@@ -4,6 +4,7 @@ const auth = require("../middleware/auth");
 const maintain = require("../middleware/maintain");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
+const { find } = require("../models/userModel");
 
 
 router.post("/register", async (req, res) => {
@@ -65,5 +66,24 @@ router.delete("/delete", async (req, res) => {
     console.log(err);
   }
 });
+
+router.post("/tokenIsValid", async (req, res) => {
+  try {
+    const token = req.header("auth-token");
+    if (!token) return res.json(false);
+    const verifiedId = auth.auth(token);
+    if (verifiedId == null) {
+      return res.json(false);
+    }
+    const user = await find(verifiedId);
+    if (!user) {
+      return res.json(false);
+    }
+    return res.json(true);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+    console.log(err);
+  }
+})
 
 module.exports = router;
