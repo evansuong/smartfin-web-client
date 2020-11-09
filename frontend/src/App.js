@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from './contexts/AppContext';
+import Axios from "axios";
 import { UserContext } from './contexts/UserContext';
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
@@ -45,6 +46,23 @@ function App() {
     token: undefined,
     user: undefined
   });
+
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      let token = localStorage.getItem("auth-token");
+      if (token === null) {
+        localStorage.setItem("auth-token", "");
+        token = "";
+      }
+      const tokenRes = await Axios.post("http://localhost:9000/users/tokenIsValid", null, {
+        headers: {
+          "auth-token": token
+        }
+      })
+    }
+
+    checkLoggedIn();
+  }, []);
 
   // on webpage startup, check if window is desktop or mobile dimensions for responsiveness
   useEffect(() => {
