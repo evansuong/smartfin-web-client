@@ -58,7 +58,10 @@ function App() {
         headers: {
           "auth-token": token
         }
-      })
+      });
+      if (tokenRes.data) {
+
+      }
     }
 
     checkLoggedIn();

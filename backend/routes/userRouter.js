@@ -95,6 +95,12 @@ router.post("/tokenIsValid", async (req, res) => {
     res.status(500).json({ error: err.message });
     console.log(err);
   }
-})
+});
+
+router.get("/", async (req, res) => {
+
+});
+
+
 
 module.exports = router;
