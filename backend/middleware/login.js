@@ -54,6 +54,11 @@ async function registerNewUser(email, password, passwordCheck, displayName,) {
 
 }
 
+/**
+ * This simply logs someone in to their account provided they have the correct credentials 
+ * @param {String} email        Email user entered
+ * @param {String} password     Password user entered
+ */
 async function login(email, password) {
   if (!email || !password)
     return { msg: "Not all fields have been entered" };

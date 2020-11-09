@@ -6,7 +6,9 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 const { find } = require("../models/userModel");
 
-
+/**
+ * Register a new user
+ */
 router.post("/register", async (req, res) => {
   try {
     const { email, password, passwordCheck, displayName } = req.body;
@@ -26,6 +28,9 @@ router.post("/register", async (req, res) => {
 
 })
 
+/**
+ * Login with registered user
+ */
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -51,6 +56,9 @@ router.post("/login", async (req, res) => {
   }
 })
 
+/**
+ * Delete a user
+ */
 router.delete("/delete", async (req, res) => {
   try {
     const verifiedId = await auth.auth(req.header("auth-token"));
@@ -67,6 +75,9 @@ router.delete("/delete", async (req, res) => {
   }
 });
 
+/**
+ * See if JWT token is valid or not 
+ */
 router.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("auth-token");
@@ -75,7 +86,7 @@ router.post("/tokenIsValid", async (req, res) => {
     if (verifiedId == null) {
       return res.json(false);
     }
-    const user = await find(verifiedId);
+    const user = await maintain.find(verifiedId);
     if (!user) {
       return res.json(false);
     }
