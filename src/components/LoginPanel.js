@@ -7,7 +7,7 @@ export default function LoginPanel({ history }) {
   const [password, setPassword] = useState();
   const handleSubmit = () => {
     console.log(username, password);
-    history.push("/main")
+    history.push("/search")
   };
   return (
     <>
