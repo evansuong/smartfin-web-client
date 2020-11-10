@@ -1,7 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from './contexts/AppContext';
+import Axios from "axios";
+import { UserContext } from './contexts/UserContext';
 
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import logo from './res/logo.png';
@@ -40,6 +42,31 @@ const muiTheme = createMuiTheme({
 function App() {
 
   const { dispatch } = useContext(AppContext)
+  const [userData, setUserData] = useState({
+    token: undefined,
+    user: undefined
+  });
+  /** 
+    useEffect(() => {
+      const checkLoggedIn = async () => {
+        let token = localStorage.getItem("auth-token");
+        if (token === null) {
+          localStorage.setItem("auth-token", "");
+          token = "";
+        }
+        const tokenRes = await Axios.post("http://localhost:9000/users/tokenIsValid", null, {
+          headers: {
+            "auth-token": token
+          }
+        });
+        if (tokenRes.data) {
+  
+        }
+      }
+  
+      checkLoggedIn();
+    }, []);
+    **/
 
   // on webpage startup, check if window is desktop or mobile dimensions for responsiveness
   useEffect(() => {
@@ -47,42 +74,42 @@ function App() {
 
     // set global state
     dispatch({
-      type: "SET_WINDOW", 
+      type: "SET_WINDOW",
       payload: window.matchMedia('(max-width: 768px)').matches
     })
   }, [])
-  
+
   // check window size every time the window changes size
   function handler(e) {
     dispatch({
-      type: "SET_WINDOW", 
+      type: "SET_WINDOW",
       payload: window.matchMedia('(max-width: 768px)').matches
     })
   }
 
   return (
-      <Router>
+    <Router>
+      <UserContext.Provider value={userData, setUserData}>
         <MuiThemeProvider theme={muiTheme}>
           <div className="app">
-            <Navbar/>
+            <Navbar />
             <div className="app__page">
-              
+
               {/* page routes */}
               <Switch>
-                <Route path="/" exact component={StartPage}/>
-                <Route path="/main" component={MainPage}/>
-                <Route path="/user" component={UserPage}/>
-                <Route path="/search" component={SearchPage}/>
+                <Route path="/" exact component={StartPage} />
+                <Route path="/main" component={MainPage} />
+                <Route path="/user" component={UserPage} />
+                <Route path="/search" component={SearchPage} />
               </Switch>
             </div>
-
             {/* footer with links to project related websites */}
             <div className="footer">
               <div></div>
               <Link to="/">
-                <img 
-                  className="footer__icon" 
-                  src={logo} 
+                <img
+                  className="footer__icon"
+                  src={logo}
                   alt="link to homepage"
                 />
               </Link>
@@ -93,8 +120,9 @@ function App() {
               </div>
             </div>
           </div>
-        </MuiThemeProvider> 
-      </Router>
+        </MuiThemeProvider>
+      </UserContext.Provider>
+    </Router>
   );
 }
 
