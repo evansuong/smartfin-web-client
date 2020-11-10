@@ -89,14 +89,12 @@ export default function WidgetArea({ currentView, currentRideData }) {
     // map widgets in the current view to the widget area
     return (
         <div className="widget-grid">
-
             {/* map all the widgets in widgetList to the area */}
             {Object.keys(widgetList).map((key, index) => {
                 let widgetData = widgetList[key];
                 return (
                     <Widget key={index} {...widgetData} rideData={currentRideData}/>);  
             })}
-
        </div>
     )
 }

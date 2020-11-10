@@ -22,7 +22,6 @@ export default function MainPage({ history, location }) {
         setCurrentRideData(location.state);
     }, [location.state]);
 
-    
     return (
         <div className="main-page">
 
