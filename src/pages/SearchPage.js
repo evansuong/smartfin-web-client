@@ -2,6 +2,7 @@ import { display } from '@material-ui/system'
 import React, { useState} from 'react'
 import { Link } from 'react-router-dom'
 import '../styles/SearchPage.css'
+import RandomRides from '../components/RandomRides'
 
 //dictionary to track reducer
 const ACTIONS = {
@@ -143,6 +144,8 @@ export default function Searches({ history }){
 
             <br/>
             <br/>
+        
+            <RandomRides />
 
             <form onSubmit={handleSubmit} >
                 <label htmlFor="requestType">Request Type</label>
