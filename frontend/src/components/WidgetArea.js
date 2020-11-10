@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/WidgetArea.css';
-import HeightChart from '../widgets/HeightChart';
+import HeightInfo from '../widgets/HeightInfo';
+import LocationInfo from '../widgets/LocationInfo';
+import TempInfo from '../widgets/TempInfo';
+
 
 import PropTypes from 'prop-types';
 
@@ -29,19 +32,19 @@ const Widgets = {
         },
         rideWidget2: {
             titleText: 'RideWidget2', 
-            bodyComponent: TemplateWidget, 
+            bodyComponent: HeightInfo, 
             gridItem: 'side',
             queryString: ''
         },
         rideWidget3: {
             titleText: 'RideWidget3', 
-            bodyComponent: TemplateWidget, 
+            bodyComponent: LocationInfo, 
             gridItem: 'left-square',
             queryString: ''
         },
         rideWidget4: {
             titleText: 'RideWidget4', 
-            bodyComponent: TemplateWidget, 
+            bodyComponent: TempInfo, 
             gridItem: 'right-square',
             queryString: ''
         },
@@ -49,9 +52,9 @@ const Widgets = {
     multiple: {
         // these declarations are the same as above i just got lazy
         multipleWidget1: widgetTemplate('MultipleWidget1', TemplateWidget, 'main', ''),
-        multipleWidget2: widgetTemplate('MultipleWidget2', TemplateWidget, 'side', ''),
-        multipleWidget3: widgetTemplate('MultipleWidget3', TemplateWidget, 'left-square', ''),
-        multipleWidget4: widgetTemplate('MultipleWidget4', TemplateWidget, 'right-square', ''),
+        multipleWidget2: widgetTemplate('MultipleWidget2', HeightInfo, 'side', ''),
+        multipleWidget3: widgetTemplate('MultipleWidget3', LocationInfo, 'left-square', ''),
+        multipleWidget4: widgetTemplate('MultipleWidget4', TempInfo, 'right-square', ''),
     },
     CDIP: {
         CDIPWidget1: widgetTemplate('CDIPWidget1', TemplateWidget, 'main', ''),
@@ -61,7 +64,7 @@ const Widgets = {
     }   
 }
 
-
+ 
 
 /* WIDGET AREA COMPONENTS */
 
@@ -104,8 +107,6 @@ WidgetArea.propTypes = {
     currentRideData: PropTypes.object,
 }
 
-
-
 // widget class defines a header and body content to show data
 function Widget({ titleText, gridItem, bodyComponent, queryString, rideData  }) {
 
@@ -117,7 +118,7 @@ function Widget({ titleText, gridItem, bodyComponent, queryString, rideData  }) 
                 {titleText}
             </div>
             <div className="widget__body">
-                {bodyComponent(rideData)}
+                {bodyComponent({rideData})}
             </div> 
         </div>
     )

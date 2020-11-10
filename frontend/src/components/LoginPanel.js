@@ -12,10 +12,10 @@ export default function LoginPanel({ history }) {
 
 
     console.log(username, password);
-    history.push("/main")
+    history.push("/search")
   };
   return (
-    <div>
+    <>
       <form autoComplete="off">
         <br />
         <FormControl>
@@ -47,9 +47,10 @@ export default function LoginPanel({ history }) {
           />
         </FormControl>
       </form>
-      <Button style={{ marginTop: '10px' }} onClick={handleSubmit}>
+      <Button style={{ marginTop: '20px' }} onClick={handleSubmit}>
         Login
       </Button>
-    </div>
+      <div className="login-panel__padding" style={{ margin: "20px" }}> </div>
+    </>
   );
 }

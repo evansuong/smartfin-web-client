@@ -9,7 +9,7 @@ const ACTIONS = {
     SET_RIDE: "set-ride"
 }
 
-export default function Searches(){
+export default function Searches({ history }){
     //state for tracking current data
     const [data, setData] = useState({});
     //state for tracking the current ride being requested
@@ -36,7 +36,7 @@ export default function Searches(){
             case "RideID":
                 console.log("RideID: " + reqs)
                 pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/ride-get/${reqs}/?format=json`);
-                item = await pog.json();    
+                item = await pog.json();   
                 setData(item);
                 break;
             case "Location":
@@ -52,8 +52,8 @@ export default function Searches(){
                 break;
             case "Random":
                 let count = parseInt(reqs)
-                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/random/ride-get/${count}/`);
-                item = await pog.json();    
+                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/random/ride-get/${count}/?format=json`);
+                item = await pog.json();
                 setData(item);
                 break;
             default:
@@ -87,65 +87,48 @@ export default function Searches(){
     //create render component if data exists, otherwise load...
     let itemsToRender;
 
-    switch(type){
-        case "RideID":
-            if (data.rideId !== undefined){
-                itemsToRender = 
-                    <>
-                        <h1>{data.rideId}</h1>
-                        <h2>{data.loc1}</h2>
-                        <h2>{data.loc2}</h2>
-                        <h2>Latitude: {data.latitude}</h2>
-                        <h2>Longitude: {data.longitude}</h2>
-                        <Link to={`/main/${data.rideId}`} >
-                            <button>View Graphs!</button>
-                        </Link>
-                    </>
-            }
-            break;
-        case "Location":
-        case "Random":
-            if(data.length > 0){
-                console.log("Location: ")
-                let rides = data;
-                itemsToRender = rides.map( (rd) => {
-                    return (
-                        <span>{rd.rideId} |  </span>
-                    )
-                } )
-                itemsToRender = 
-                    <>
-                        {itemsToRender}
-                        <Link to={`/main/${data[0].rideID}`} >
-                            <button>View Graphs!</button>
-                        </Link>
-                    </>   
-            }
-            break;
-        case "Date":
-    
-            break;
-        default:
-            console.log("ruh roh")
-            itemsToRender = "Enter A Request"
+   
+    console.log(data)
+    if(type === 'RideID'){
+        if (data.rideId !== undefined){
+            itemsToRender = 
+                <>
+                    <h1>{data.rideId}</h1>
+                    <h2>{data.loc1}</h2>
+                    <h2>{data.loc2}</h2>
+                    <h2>Latitude: {data.latitude}</h2>
+                    <h2>Longitude: {data.longitude}</h2>
+                    <button onClick={() => history.push({
+                        pathname: "/main",
+                        state: data,
+                    })}>
+                        view ride
+                    </button>
+                </>
+        }
+    } else {
+        if (data.length > 0) {
+            console.log(data.length)
+            itemsToRender = <>
+            {data.map(data => (
+                <>
+                    <h1>{data.rideId}</h1>
+                    <h2>{data.loc1}</h2>
+                    <h2>{data.loc2}</h2>
+                    <h2>Latitude: {data.latitude}</h2>
+                    <h2>Longitude: {data.longitude}</h2>
+                    <button onClick={() => history.push({
+                        pathname: "/main",
+                        state: data,
+                    })}>
+                        view ride
+                    </button>
+                </>
+            ))}
+        </>
+        }
     }
-
-    
-    // if (data.rideId !== undefined){
-    //     itemsToRender = 
-    //         <>
-    //             <h1>{data.rideId}</h1>
-    //             <h2>{data.loc1}</h2>
-    //             <h2>{data.loc2}</h2>
-    //             <h2>Latitude: {data.latitude}</h2>
-    //             <h2>Longitude: {data.longitude}</h2>
-    //             <Link to={`/main/${data.rideId}`} >
-    //                 <button>View Graphs!</button>
-    //             </Link>
-    //         </>
-    // }else {
-    //     itemsToRender = "Enter A Request"
-    // }
+        
 
     //return form with component
     return (
@@ -183,5 +166,3 @@ export default function Searches(){
     )
 
 }
-
-    

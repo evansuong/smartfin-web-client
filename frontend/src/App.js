@@ -46,26 +46,27 @@ function App() {
     token: undefined,
     user: undefined
   });
-
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      let token = localStorage.getItem("auth-token");
-      if (token === null) {
-        localStorage.setItem("auth-token", "");
-        token = "";
-      }
-      const tokenRes = await Axios.post("http://localhost:9000/users/tokenIsValid", null, {
-        headers: {
-          "auth-token": token
+  /** 
+    useEffect(() => {
+      const checkLoggedIn = async () => {
+        let token = localStorage.getItem("auth-token");
+        if (token === null) {
+          localStorage.setItem("auth-token", "");
+          token = "";
         }
-      });
-      if (tokenRes.data) {
-
+        const tokenRes = await Axios.post("http://localhost:9000/users/tokenIsValid", null, {
+          headers: {
+            "auth-token": token
+          }
+        });
+        if (tokenRes.data) {
+  
+        }
       }
-    }
-
-    checkLoggedIn();
-  }, []);
+  
+      checkLoggedIn();
+    }, []);
+    **/
 
   // on webpage startup, check if window is desktop or mobile dimensions for responsiveness
   useEffect(() => {
