@@ -88,24 +88,19 @@ export default function Searches({ history }){
     //create render component if data exists, otherwise load...
     let itemsToRender;
 
-   
-    console.log(data)
     if(type === 'RideID'){
         if (data.rideId !== undefined){
             itemsToRender = 
-                <>
-                    <h1>{data.rideId}</h1>
-                    <h2>{data.loc1}</h2>
-                    <h2>{data.loc2}</h2>
-                    <h2>Latitude: {data.latitude}</h2>
-                    <h2>Longitude: {data.longitude}</h2>
+                <div className="requested-ride">
+                    <h3>Ride ID: {data.rideId}</h3>
+                    <h3>Location: {data.loc1}</h3>
                     <button onClick={() => history.push({
                         pathname: "/main",
                         state: data,
                     })}>
-                        view ride
+                        View Ride
                     </button>
-                </>
+                </div>
         }
     } else {
         if (data.length > 0) {
@@ -135,35 +130,33 @@ export default function Searches({ history }){
     return (
         <div className="search-page">
             {/* two components, ride list and input fields */}
-            <h1>
-                search pages
+            <h1 id='search-title'>
+                <div>Search</div>
             </h1>
-            <Link to="/main">
-                back
-            </Link>
 
-            <br/>
-            <br/>
-        
-            <RandomRides />
+            <div className="row">
+                <div className="col">
+                    <RandomRides />
+                </div>
 
-            <form onSubmit={handleSubmit} >
-                <label htmlFor="requestType">Request Type</label>
-                <select name="requestType" id="" value={type} onSubmit={e => setType(e.target.value)} onChange={e => setType(e.target.value)}>
-                    <option value="RideID">RideID</option>
-                    <option value="Location">Location</option>
-                    <option value="Date">Date</option>
-                    <option value="Random">Random</option>
-                </select>
-                
-                {inputFields}
+                <div className="col" id="interface">
+                    <form onSubmit={handleSubmit} className="form">
+                        <label htmlFor="requestType">Request Type</label>
+                        <select name="requestType" id="" value={type} onSubmit={e => setType(e.target.value)} onChange={e => setType(e.target.value)}>
+                            <option value="RideID">RideID</option>
+                            <option value="Location">Location</option>
+                            <option value="Date">Date</option>
+                            <option value="Random">Random</option>
+                        </select>
+                        
+                        {inputFields}
 
-            </form>
-
-            <br/>
-            <br/>
-
-            <div>{itemsToRender}</div>
+                    </form>
+                    
+                    <div>{itemsToRender}</div>
+                    
+                </div>
+            </div>
 
         </div>
     )

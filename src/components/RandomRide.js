@@ -6,16 +6,15 @@ function RandomRide(props){
 
     return(
         //columns of ride number, location, date
-        <div className='row'>
+        <div className='ride-row'>
             <div className='column'>
-                {/* {props.ride.rideId} */}
-                pog
+               RideID: {props.ride.rideId}
             </div>
             <div className='column'>
-                {/* {props.ride.loc1} */}
+               Location: {props.ride.loc1}
             </div>
             <div className='column'>
-                {/* {props.ride.startTime} */}
+               Start Time: {props.ride.startTime}
             </div>
         </div>
     )
@@ -23,4 +22,4 @@ function RandomRide(props){
 
 
 
-export default RandomRide();
+export default RandomRide;
