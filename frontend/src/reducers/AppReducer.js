@@ -16,7 +16,11 @@ export const AppReducer = (state, action) => {
             return Object.assign({}, state, {
                 isLightTheme: false
             });
+        case "SET_RIDE_DATA":
+            return Object.assign({}, state, {
+                rideData: action.payload
+            });
         default: 
-            return state
+            return state;
     }
 }
