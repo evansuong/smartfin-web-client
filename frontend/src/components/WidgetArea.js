@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/WidgetArea.css';
-import HeightInfo from '../widgets/HeightInfo';
-import LocationInfo from '../widgets/LocationInfo';
-import TempInfo from '../widgets/TempInfo';
 
 
 import PropTypes from 'prop-types';
 
 import TemplateWidget from '../widgets/TemplateWidget';
+import HeightChart from '../widgets/HeightChart';
+import SessionInfo from '../widgets/SessionInfo';
+import LocationAverage from '../widgets/LocationAverage';
 
 
 /*
@@ -31,30 +31,30 @@ const Widgets = {
             queryString: ''
         },
         rideWidget2: {
-            titleText: 'RideWidget2', 
-            bodyComponent: HeightInfo, 
+            titleText: 'Wave Height', 
+            bodyComponent: HeightChart, 
             gridItem: 'side',
             queryString: ''
         },
         rideWidget3: {
-            titleText: 'RideWidget3', 
-            bodyComponent: LocationInfo, 
+            titleText: 'Ocean Temperature', 
+            bodyComponent: TemplateWidget, 
             gridItem: 'left-square',
             queryString: ''
         },
         rideWidget4: {
             titleText: 'RideWidget4', 
-            bodyComponent: TempInfo, 
+            bodyComponent: SessionInfo, 
             gridItem: 'right-square',
             queryString: ''
         },
     },
     multiple: {
         // these declarations are the same as above i just got lazy
-        multipleWidget1: widgetTemplate('MultipleWidget1', TemplateWidget, 'main', ''),
-        multipleWidget2: widgetTemplate('MultipleWidget2', HeightInfo, 'side', ''),
-        multipleWidget3: widgetTemplate('MultipleWidget3', LocationInfo, 'left-square', ''),
-        multipleWidget4: widgetTemplate('MultipleWidget4', TempInfo, 'right-square', ''),
+        multipleWidget1: widgetTemplate('MultipleWidget1', LocationAverage, 'main', ''),
+        multipleWidget2: widgetTemplate('MultipleWidget2', TemplateWidget, 'side', ''),
+        multipleWidget3: widgetTemplate('MultipleWidget3', TemplateWidget, 'left-square', ''),
+        multipleWidget4: widgetTemplate('MultipleWidget4', TemplateWidget, 'right-square', ''),
     },
     CDIP: {
         CDIPWidget1: widgetTemplate('CDIPWidget1', TemplateWidget, 'main', ''),

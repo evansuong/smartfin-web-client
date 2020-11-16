@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import ViewMenu from '../components/ViewMenu';
 import WidgetArea from '../components/WidgetArea';
 
-import useFetch from '../hooks/useFetch';
-
 import searchIcon from '../res/search.webp';
 
 import '../styles/MainPage.css';

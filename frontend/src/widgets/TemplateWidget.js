@@ -9,7 +9,7 @@ export default function TemplateWidget({rideData}) {
     return (
         <div>
             {keys.map((key) => (
-                <div>{key}: {rideData[key]}</div>
+                <div key={key}>{key}: {rideData[key]}</div>
             ))}
         </div>
     )

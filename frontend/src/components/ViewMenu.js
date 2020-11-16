@@ -60,9 +60,9 @@ export default function ViewMenu({ currentView, setCurrentView }) {
                 }}
                 disableTouchRipple
             >
-                <Tab label="this" {...a11yProps(0)}/>
-                <Tab label="multiple" {...a11yProps(1)}/>
-                <Tab label="CDIP" {...a11yProps(2)}/>
+                <Tab label="Session" {...a11yProps(0)}/>
+                <Tab label="Local" {...a11yProps(1)}/>
+                <Tab label="All" {...a11yProps(2)}/>
             </Tabs>
         </div>
     )

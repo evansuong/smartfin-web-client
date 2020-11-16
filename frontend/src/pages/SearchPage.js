@@ -35,25 +35,19 @@ export default function Searches({ history }){
         switch(type){
             case "RideID":
                 console.log("RideID: " + reqs)
-                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/ride-get/${reqs}/?format=json`);
+                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides/rideId=${reqs}?format=json`);
                 item = await pog.json();   
                 setData(item);
                 break;
             case "Location":
                 console.log("Location: " + reqs)
-                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/location/ride-get/${reqs}/?format=json`);
+                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides/location=${reqs}?format=json`);
                 item = await pog.json();    
                 setData(item);
                 break;
             case "Date":
-                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/ride-get/${reqs}/?format=json`); //update to get two dates, start and beginning
+                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides/startDate=${reqs[0]}/endDate=${reqs[1]}?format=json`); //update to get two dates, start and beginning
                 item = await pog.json();    
-                setData(item);
-                break;
-            case "Random":
-                let count = parseInt(reqs)
-                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/random/ride-get/${count}/?format=json`);
-                item = await pog.json();
                 setData(item);
                 break;
             default:
@@ -70,13 +64,7 @@ export default function Searches({ history }){
                <label htmlFor="end">end date</label>
                <input type="date" name="end" value={req} onChange={e => setReq(e.target.value)}/> 
             </>
-    }if(type === "Random"){
-        inputFields =
-        <>
-            <label htmlFor="request">Count</label>
-            <input type="number" name="request" value={req} onChange={e => setReq(e.target.value)}/>
-        </> 
-    }else{
+    } else {
         inputFields =
             <>
                 <label htmlFor="request">Request</label>

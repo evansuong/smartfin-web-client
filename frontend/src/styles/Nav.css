@@ -4,7 +4,7 @@
     align-items: center;
     height: 60px;
     padding: 5px 15px 5px 5px;
-    background: rgb(0, 0, 0, .8);
+    background: rgb(0, 0, 0);
     position: sticky;
     top: 0;
     z-index: 999;
