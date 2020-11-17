@@ -103,7 +103,10 @@ router.get("/", async (req, res) => {
   const token = req.header("auth-token");
   const verifiedId = auth.auth(token);
   const user = maintain.find(verifiedId);
-  res.json(user);
+  res.json({
+    displayName: user.displayName,
+    id: user._id
+  })
 });
 
 
