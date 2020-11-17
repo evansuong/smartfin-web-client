@@ -8,6 +8,14 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import 'date-fns';
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 
 import { Link } from 'react-router-dom'
@@ -44,13 +52,16 @@ export default function Searches({ history }){
     //track type requested
     const [type, setType] = useState('RideID');
     //track date
-    const [date, setDate] = useState({});
+    const [date1, setDate1] = React.useState(new Date());
+    const [date2, setDate2] = React.useState(new Date());
 
     const classes = useStyles();
 
     //update changes of request form
-    const handleChange = (event) => {
+    const handleTypeChange = (event) => {
+        // console.log(event.target.value)
         setType(event.target.value);
+        console.log(type)
     };
 
     //on submit of form, gets the data and sets it, doesn't work directly for some reason
@@ -107,12 +118,32 @@ export default function Searches({ history }){
     let inputFields;
     if(type === "Date"){
         inputFields = 
-            <>
-               <label htmlFor="start">start date</label>
-               <input type="date" name="start" />
-               <label htmlFor="end">end date</label>
-               <input type="date" name="end"  /> 
-            </>
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container justify="space-around">
+                    <KeyboardDatePicker
+                        margin="normal"
+                        id="date-picker-dialog"
+                        label="Start Date"
+                        format="MM/dd/yyyy"
+                        value={date1}
+                        // onChange={handleDateChange}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
+                    <KeyboardDatePicker
+                        margin="normal"
+                        id="date-picker-dialog"
+                        label="End Date"
+                        format="MM/dd/yyyy"
+                        value={date1}
+                        // onChange={handleDateChange}
+                        KeyboardButtonProps={{
+                            'aria-label': 'change date',
+                        }}
+                    />
+                </Grid>
+            </MuiPickersUtilsProvider>
     }if(type === "Random"){
         inputFields = 
             <>
@@ -196,7 +227,7 @@ export default function Searches({ history }){
                                 labelId="demo-simple-select-helper-label"
                                 id="demo-simple-select-helper"
                                 value={type}
-                                onChange={handleChange}
+                                onChange={handleTypeChange}
                             >
                                 <MenuItem value="RideID">RideID</MenuItem>
                                 <MenuItem value="Location">Location</MenuItem>

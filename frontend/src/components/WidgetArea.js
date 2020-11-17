@@ -9,6 +9,8 @@ import HeightChart from '../widgets/HeightChart';
 import SessionInfo from '../widgets/SessionInfo';
 import LocationAverage from '../widgets/LocationAverage';
 
+import MapRide from './MapRide';
+
 
 /*
  * this function simply formats a widget into a object
@@ -26,7 +28,7 @@ const Widgets = {
     ride: {
         rideWidget1: {
             titleText: 'RideWidget1', 
-            bodyComponent: TemplateWidget, 
+            bodyComponent: SessionInfo, 
             gridItem: 'main',
             queryString: ''
         },
@@ -106,9 +108,10 @@ WidgetArea.propTypes = {
 }
 
 // widget class defines a header and body content to show data
-function Widget({ titleText, gridItem, bodyComponent, queryString, rideData  }) {
+function Widget({ key, titleText, gridItem, bodyComponent, queryString, rideData  }) {
 
     // const { rideApiFetch } = useFetch()
+    // console.log(key)
 
     return (
         <div className={`widget ${gridItem}`}>
