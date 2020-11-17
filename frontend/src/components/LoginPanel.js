@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
+
 import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
 import '../styles/LoginPanel.css';
 
@@ -8,12 +9,13 @@ export default function LoginPanel({ history }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const handleSubmit = () => {
-    myHistory.push("/login");
+    //myHistory.push("/login");
 
 
     console.log(username, password);
-    history.push("/search")
+    //history.push("/login")
   };
+
   return (
     <>
       <form autoComplete="off">

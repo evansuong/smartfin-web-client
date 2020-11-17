@@ -81,13 +81,15 @@ router.delete("/delete", async (req, res) => {
 router.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("auth-token");
+    console.log(token);
     if (!token) return res.json(false);
-    const verifiedId = auth.auth(token);
+    const verifiedId = await auth.auth(token);
     if (verifiedId == null) {
       return res.json(false);
     }
+    console.log(verifiedId.data);
     const user = await maintain.find(verifiedId);
-    if (!user) {
+    if (user == null) {
       return res.json(false);
     }
     return res.json(true);
@@ -98,7 +100,10 @@ router.post("/tokenIsValid", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-
+  const token = req.header("auth-token");
+  const verifiedId = auth.auth(token);
+  const user = maintain.find(verifiedId);
+  res.json(user);
 });
 
 

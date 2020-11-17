@@ -1,5 +1,7 @@
+const User = require("../models/userModel")
+
 /**
- * This simply deltes a user. You must verify if the 
+ * This simply deletes a user. You must verify if the 
  * user is permittted to delte this id BEFORE you call this function
  * @param {String} id    if of user you want to delete
  */
@@ -11,7 +13,7 @@ async function deleteUser(id) {
  * @param {String} id    id of user you want to find
  */
 async function find(id) {
-  return await user.findByID(id);
+  return await User.findById(id);
 }
 
 module.exports = {

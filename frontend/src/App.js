@@ -46,27 +46,38 @@ function App() {
     token: undefined,
     user: undefined
   });
-  /** 
-    useEffect(() => {
-      const checkLoggedIn = async () => {
-        let token = localStorage.getItem("auth-token");
-        if (token === null) {
-          localStorage.setItem("auth-token", "");
-          token = "";
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      //get JWT token from local storage
+      let token = localStorage.getItem("auth-token");
+      //handles the case when the key 'auth token' does not exist
+      if (token === null) {
+        localStorage.setItem("auth-token", "");
+        token = "";
+      }
+      //make post requeest to check if token in local storage is correct
+      const tokenRes = await Axios.post("http://localhost:9000/users/tokenIsValid", null, {
+        headers: {
+          "auth-token": token
         }
-        const tokenRes = await Axios.post("http://localhost:9000/users/tokenIsValid", null, {
+      });
+      if (tokenRes.data) {
+        const userRes = await Axios.get("http://localhost:9000/users/", {
           headers: {
-            "auth-token": token
+            "auth-token": token,
           }
         });
-        if (tokenRes.data) {
-  
-        }
+        setUserData({
+          token,
+          user: userRes.data,
+        });
       }
-  
-      checkLoggedIn();
-    }, []);
-    **/
+
+    }
+
+    //call defined function above 
+    checkLoggedIn();
+  }, []);
 
   // on webpage startup, check if window is desktop or mobile dimensions for responsiveness
   useEffect(() => {
