@@ -97,6 +97,9 @@ router.post("/tokenIsValid", async (req, res) => {
   }
 });
 
+/**
+ * This will find the user and return the users displayName and id 
+ */
 router.get("/", async (req, res) => {
   const token = req.header("auth-token");
   const verifiedId = auth.auth(token);

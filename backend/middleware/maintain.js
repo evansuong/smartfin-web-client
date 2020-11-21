@@ -16,6 +16,12 @@ async function find(id) {
   return await User.findById(id);
 }
 
+/**
+ * This adds a favorite ride for the user 
+ * @param {String} id      id of user the ride needs to be added to
+ * @param {String} rideId   ride ID for the ride needed to be added
+ * @return {[String]}       Array of Ride Id's for the user 
+ */
 async function addRide(id, rideId) {
   await User.findByIdAndUpdate(
     id, {
@@ -24,11 +30,27 @@ async function addRide(id, rideId) {
   )
   const user = await User.findById(id);
   return user.favoriteRides;
+}
 
+/**
+ * This deletes a favorite ride for the user
+ * @param {*} id          id of the yser
+ * @param {*} rideId      rideId to be deleted
+ * @return {[String]}     array of updated rides
+ */
+async function deleteRide(id, rideId) {
+  await User.findByIdAndUpdate(
+    id, {
+    $pull: { "favoriteRides": rideId }
+  }
+  )
+  const user = await User.findById(id);
+  return user.favoriteRides;
 }
 
 module.exports = {
   deleteUser,
   find,
-  addRide
+  addRide,
+  deleteRide,
 }
