@@ -4,7 +4,6 @@ const auth = require("../middleware/auth");
 const maintain = require("../middleware/maintain");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
-const { find } = require("../models/userModel");
 
 /**
  * Register a new user
@@ -81,7 +80,6 @@ router.delete("/delete", async (req, res) => {
 router.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("auth-token");
-    console.log(token);
     if (!token) return res.json(false);
     const verifiedId = await auth.auth(token);
     if (verifiedId == null) {

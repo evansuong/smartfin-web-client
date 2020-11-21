@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const config = require("./config/config");
 
-var userRouter = require("./routes/userRouter.js")
+var userRouter = require("./routes/userRouter.js");
+var rideRoutes = require("./routes/rideRoutes.js");
 
 //set up express
 
@@ -23,6 +24,7 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   },
   (err) => {
     if (err) throw err;
@@ -34,3 +36,4 @@ mongoose.connect(
 
 //when e start with /users, use the userRouter router
 app.use('/users', userRouter);
+app.use('/rides', rideRoutes);

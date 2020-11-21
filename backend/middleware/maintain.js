@@ -16,7 +16,19 @@ async function find(id) {
   return await User.findById(id);
 }
 
+async function addRide(id, rideId) {
+  await User.findByIdAndUpdate(
+    id, {
+    $addToSet: { "favoriteRides": rideId }
+  }
+  )
+  const user = await User.findById(id);
+  return user.favoriteRides;
+
+}
+
 module.exports = {
   deleteUser,
-  find
+  find,
+  addRide
 }
