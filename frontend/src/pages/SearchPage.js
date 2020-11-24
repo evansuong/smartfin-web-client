@@ -16,6 +16,10 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from '@material-ui/pickers';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography'
 
 
 import { Link } from 'react-router-dom'
@@ -42,6 +46,10 @@ const useStyles = makeStyles((theme) => ({
           width: '25ch',
         },
       },
+    card: {
+        minWidth: 275,
+        backgroundColor: "transparent"
+    }
   }));
 
 export default function Searches({ history }){
@@ -52,23 +60,30 @@ export default function Searches({ history }){
     //track type requested
     const [type, setType] = useState('RideID');
     //track date
-    const [date1, setDate1] = React.useState(new Date());
-    const [date2, setDate2] = React.useState(new Date());
-
+    const [date1, setDate1] = useState(new Date());
+    const [date2, setDate2] = useState(new Date());
+    //track items to render
+    // const [itemsToRender, setItemToRender] = useState(<></>)
+    //store styles
     const classes = useStyles();
 
     //update changes of request form
     const handleTypeChange = (event) => {
-        // console.log(event.target.value)
         setType(event.target.value);
-        console.log(type)
     };
-
     //on submit of form, gets the data and sets it, doesn't work directly for some reason
     function handleSubmit(e){
         e.preventDefault();
         setReq(e.target[1].value)
     };
+    //update date 1
+    const handleDate1 = (e) => {
+        console.log(e);
+    }
+    //update date 2
+    const handleDate2 = (e) => {
+        console.log(e);
+    }
 
     //update when req updated
     useEffect(() => {
@@ -100,8 +115,9 @@ export default function Searches({ history }){
                 setData(item);
                 break;
             case "Date":
-                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/ride-get/${req}/?format=json`); //update to get two dates, start and beginning
-                item = await pog.json();    
+                pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides/startDate=${date1},endDate=${date2}`); //update to get two dates, start and beginning
+                item = await pog.json();  
+                console.log(item);  
                 setData(item);
                 break;
             case "Random":
@@ -110,6 +126,8 @@ export default function Searches({ history }){
                 item = await pog.json();
                 setData(item);
                 break;
+            case "All":
+                break;
             default:
                 console.log("ruh roh")
         }
@@ -117,7 +135,7 @@ export default function Searches({ history }){
 
     let inputFields;
     if(type === "Date"){
-        inputFields = 
+        inputFields =  
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container justify="space-around">
                     <KeyboardDatePicker
@@ -126,7 +144,7 @@ export default function Searches({ history }){
                         label="Start Date"
                         format="MM/dd/yyyy"
                         value={date1}
-                        // onChange={handleDateChange}
+                        onChange={handleDate1}
                         KeyboardButtonProps={{
                             'aria-label': 'change date',
                         }}
@@ -136,23 +154,25 @@ export default function Searches({ history }){
                         id="date-picker-dialog"
                         label="End Date"
                         format="MM/dd/yyyy"
-                        value={date1}
-                        // onChange={handleDateChange}
+                        value={date2}
+                        onChange={handleDate2}
                         KeyboardButtonProps={{
                             'aria-label': 'change date',
                         }}
                     />
                 </Grid>
             </MuiPickersUtilsProvider>
-    }if(type === "Random"){
+        
+    }else if(type === "Random"){
         inputFields = 
             <>
                 <TextField id="filled-basic" label="Random" variant="filled" /> 
                 <FormHelperText>Enter number of rides</FormHelperText>
             </>
+        
 
-    }if(type === "Location"){
-        inputFields = 
+    }else if(type === "Location"){
+         inputFields = 
             <>
                 <TextField id="filled-basic" label="Location" variant="filled" /> 
                 <FormHelperText>Enter requested Location</FormHelperText>
@@ -165,47 +185,6 @@ export default function Searches({ history }){
             </> 
     }
 
-    //create render component if data exists, otherwise load...
-    let itemsToRender;
-
-    if(type === 'RideID'){
-        if (data.rideId !== undefined){
-            itemsToRender = 
-                <div className="requested-ride">
-                    <h3>Ride ID: {data.rideId}</h3>
-                    <h3>Location: {data.loc1}</h3>
-                    <button onClick={() => history.push({
-                        pathname: "/main",
-                        state: data,
-                    })}>
-                        View Ride
-                    </button>
-                </div>
-        }
-    } else {
-        if (data.length > 0) {
-            console.log(data.length)
-            itemsToRender = <>
-            {data.map(data => (
-                <>
-                    <h1>{data.rideId}</h1>
-                    <h2>{data.loc1}</h2>
-                    <h2>{data.loc2}</h2>
-                    <h2>Latitude: {data.latitude}</h2>
-                    <h2>Longitude: {data.longitude}</h2>
-                    <button onClick={() => history.push({
-                        pathname: "/main",
-                        state: data,
-                    })}>
-                        view ride
-                    </button>
-                </>
-            ))}
-        </>
-        }
-    }
-        
-
     //return form with component
     return (
         <div className="search-page">
@@ -215,43 +194,38 @@ export default function Searches({ history }){
             </h1>
 
             <div className="row">
-                <div className="col">
+                <div className="col-1">
                     <RandomRides />
                 </div>
 
-                <div className="col" id="interface">
-                    <form onSubmit={handleSubmit} className={classes.root}>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel id="demo-simple-select-helper-label">RideID</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-helper-label"
-                                id="demo-simple-select-helper"
-                                value={type}
-                                onChange={handleTypeChange}
-                            >
-                                <MenuItem value="RideID">RideID</MenuItem>
-                                <MenuItem value="Location">Location</MenuItem>
-                                <MenuItem value="Date">Date</MenuItem>
-                                <MenuItem value="Random">Random</MenuItem>
-                            </Select>
-                            <FormHelperText>Choose Type of Ride to Request</FormHelperText>
-                        </FormControl>
+                <div className="col-2" id="interface">
+                    <Card className={classes.card} variant="outlined">
+                        <CardContent>
 
-                        
+                            <form onSubmit={handleSubmit} className={classes.root}>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel id="demo-simple-select-helper-label">RideID</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-helper-label"
+                                        id="demo-simple-select-helper"
+                                        value={type}
+                                        onChange={handleTypeChange}
+                                    >
+                                        <MenuItem value="RideID">RideID</MenuItem>
+                                        <MenuItem value="Location">Location</MenuItem>
+                                        <MenuItem value="Date">Date</MenuItem>
+                                        <MenuItem value="Random">Random</MenuItem>
+                                    </Select>
+                                    <FormHelperText>Choose Type of Ride to Request</FormHelperText>
+                                </FormControl>
 
-                        {inputFields}
+                                {inputFields}
 
-                        <Button variant="outlined" type="submit" >Submit</Button>
-                        
-                        
+                                <Button variant="outlined" type="submit" >Submit</Button>
 
-                    </form>
-                    
-                    <div>{itemsToRender}</div>
-
-
-                    
-                    
+                            </form>
+                        </CardContent>
+                    </Card>                   
                 </div>
             </div>
 

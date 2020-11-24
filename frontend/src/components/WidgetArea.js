@@ -9,7 +9,7 @@ import HeightChart from '../widgets/HeightChart';
 import SessionInfo from '../widgets/SessionInfo';
 import LocationAverage from '../widgets/LocationAverage';
 
-import MapRide from './MapRide';
+import Mappo from './MapRide';
 
 
 /*
@@ -23,12 +23,13 @@ function widgetTemplate(title, body, gridItem, qString) {
         queryString: qString,
     }
 }
+
 // the data declared here is the same as ^^^
 const Widgets = {
     ride: {
         rideWidget1: {
             titleText: 'RideWidget1', 
-            bodyComponent: SessionInfo, 
+            bodyComponent: HeightChart, 
             gridItem: 'main',
             queryString: ''
         },
@@ -81,6 +82,7 @@ const viewToWidgetType = {
 export default function WidgetArea({ currentView, currentRideData }) {
     
     const [widgetList, setWidgetList] = useState(Widgets['ride']);
+    let first = true;
     
     // set the view 
     useEffect(() => {
@@ -90,14 +92,31 @@ export default function WidgetArea({ currentView, currentRideData }) {
 
     // map widgets in the current view to the widget area
     return (
+        <>
+        {/* {<Mappo />} */}
         <div className="widget-grid">
+            
             {/* map all the widgets in widgetList to the area */}
             {Object.keys(widgetList).map((key, index) => {
                 let widgetData = widgetList[key];
+
+                if(first){
+                    first = false;
+                    return ( <Mappo rideDate={currentRideData}/> )
+                }
+
                 return (
-                    <Widget key={index} {...widgetData} rideData={currentRideData}/>);  
+                    <>                    
+                        
+                        <Widget key={index} {...widgetData} rideData={currentRideData}/>); 
+                        {/* <div>pog</div> */}
+                    </> 
+                )
             })}
+            
        </div>
+       
+       </>
     )
 }
 

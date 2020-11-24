@@ -1,13 +1,20 @@
 import React from 'react'
-// import '../styles/RandomRide.css'
+import '../styles/RandomRide.css'
+import { useHistory } from 'react-router'
 
 function RandomRide(props){
+    const history = useHistory();
 
 
     return(
         //columns of ride number, location, date
         <div className='ride-row'>
-            <div className='column'>
+            <div className='column' onClick={() => {
+                history.push({
+                    pathname: "/main",
+                    state: props.ride
+                })
+            }} >
                RideID: {props.ride.rideId}
             </div>
             <div className='column'>

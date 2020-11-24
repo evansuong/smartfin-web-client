@@ -2,41 +2,45 @@ import React, { useState, useEffect } from 'react';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 
 const mapStyles = {
-  width: '100%',
-  height: '100%'
+  margin: '8px',
+  width: '64%',
+  height: '49%'
 };
 
-export function MapContainer (props, { rideData }) {
+export function MapContainer (props) {
+  console.log(props.rideDate.rideId);
+  
   const [showInfo, setShowInfo] = useState(false);
   const [activeMarker, setActiveMarker] = useState({});
   const [selectedPlace, setSelectedPlace] = useState({});
-  const [ride, setRide] = useState([]);
-  const [bounds, setBounds] = useState(new props.google.maps.LatLngBounds());
-
-  console.log(rideData)
+  const [rides, setRides] = useState([]);
+  // const [bounds, setBounds] = useState(new props.google.maps.LatLngBounds());
 
   //get all the rides
   useEffect(() => {
-    getRide();
+    getRides();
   }, [])
 
-  useEffect(() => {
-    let bound = new props.google.maps.LatLngBounds();
-    let point = {lat: ride.latitude, lng: ride.longitude}
-    bound.extend(point);
-    
-    setBounds(bound)
-    // console.log(bounds)
-  }, [ride])
+  // useEffect(() => {
+  //   let bound = new props.google.maps.LatLngBounds();
+  //   rides.forEach((ride) =>{
+  //     let point = {lat: ride.latitude, lng: ride.longitude}
+  //     // console.log(point);
+  //     bound.extend(point);
+  //   })
+  //   setBounds(bound)
+  //   console.log(bounds)
+  // }, [rides])
 
   //get all rides
-  const getRide = async () => {
-    let pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides/rideId=15692?format=json`);
+  const getRides = async () => {
+    //currently gets a single ride bcause database is empty
+    let pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides/rideId=${props.rideDate.rideId}?format=json`);
     let item = await pog.json();    
     
     console.log(item); 
     
-    setRide(item);
+    setRides([item]);
   }
 
   const onMarkerClick = (props, marker, e) => {
@@ -55,23 +59,25 @@ export function MapContainer (props, { rideData }) {
   return(
         <Map
           google={props.google}
-          zoom={15}
           style={mapStyles}
-          initialCenter={
+          center={
             {
-              lat: 32.859929, 
-              lng: -117.26
+              lat: rides[0] ? rides[0].latitude : 32.859929, 
+              lng: rides[0] ? rides[0].longitude : -117.26
             }
           }
-          bounds = {bounds}
+          // bounds = {bounds}
+          zoom={15}
         >
-          
-        <Marker
-            onClick = {onMarkerClick}
-            name = {ride.rideId}
-            position = {{lat:ride.latitude, lng: ride.longitude}}
-        />
-            
+          {rides.map((ride) => {
+            return(
+              <Marker
+              onClick = {onMarkerClick}
+              name = {ride.rideId}
+              position = {{lat:ride.latitude, lng: ride.longitude}}
+            />
+            )
+          })}
           <InfoWindow
             marker = {activeMarker}
             visible = {showInfo}
@@ -90,3 +96,7 @@ export function MapContainer (props, { rideData }) {
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyBuAlM6spWnrliGyJYVrTyjOWh4ZGj4PrQ'
 })(MapContainer);
+
+export function MapTest(){
+  return MapContainer;
+}

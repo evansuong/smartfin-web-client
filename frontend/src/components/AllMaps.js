@@ -31,7 +31,8 @@ export function MapContainer (props) {
 
   //get all rides
   const getRides = async () => {
-    let pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/random/ride-get/0/`);
+    // TODO: change API link when it is full
+    let pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides`);
     let item = await pog.json();    
     
     console.log(item); 

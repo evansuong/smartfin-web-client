@@ -15,6 +15,9 @@ import SearchPage from './pages/SearchPage'
 import UserPage from './pages/UserPage';
 import Navbar from './components/Navbar';
 
+// test
+import Map from './components/AllMaps'
+
 
 // override default MaterialUI themes for MaterialUI components
 const muiTheme = createMuiTheme({
@@ -101,6 +104,8 @@ function App() {
                 <Route path="/main" component={MainPage} />
                 <Route path="/user" component={UserPage} />
                 <Route path="/search" component={SearchPage} />
+                {/* test */}
+                <Route path="/test" component={Map} />
               </Switch>
             </div>
             {/* footer with links to project related websites */}
