@@ -79,7 +79,7 @@ router.delete("/delete", async (req, res) => {
  */
 router.post("/tokenIsValid", async (req, res) => {
   try {
-    const token = req.header("auth-token");
+    const token = req.header("auth-token"); 
     if (!token) return res.json(false);
     const verifiedId = await auth.auth(token);
     if (verifiedId == null) {

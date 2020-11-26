@@ -1,7 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from './contexts/AppContext';
-import Axios from "axios";
-import { UserContext } from './contexts/UserContext';
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
@@ -42,10 +40,6 @@ const muiTheme = createMuiTheme({
 function App() {
 
   const { dispatch } = useContext(AppContext)
-  const [userData, setUserData] = useState({
-    token: undefined,
-    user: undefined
-  });
   useEffect(() => {
     const checkLoggedIn = async () => {
       //get JWT token from local storage
@@ -56,29 +50,7 @@ function App() {
         token = "";
       }
       //make post requeest to check if token in local storage is correct
-      const tokenRes = await Axios.post("http://localhost:9000/users/tokenIsValid", null, {
-        headers: {
-          "auth-token": token
-        }
-      });
-      if (tokenRes.data) {
-        const userRes = await Axios.get("http://localhost:9000/users/", {
-          headers: {
-            "auth-token": token,
-          }
-        });
-        setUserData({
-          token,
-          user: userRes.data,
-        });
-      }
-
-    }
-
-    //call defined function above 
-    checkLoggedIn();
-  }, []);
-
+    
   // on webpage startup, check if window is desktop or mobile dimensions for responsiveness
   useEffect(() => {
     window.matchMedia("(min-width: 768px)").addListener(handler)
@@ -100,7 +72,6 @@ function App() {
 
   return (
     <Router>
-      <UserContext.Provider value={userData, setUserData}>
         <MuiThemeProvider theme={muiTheme}>
           <div className="app">
             <Navbar />
@@ -132,7 +103,6 @@ function App() {
             </div>
           </div>
         </MuiThemeProvider>
-      </UserContext.Provider>
     </Router>
   );
 }
