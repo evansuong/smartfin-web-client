@@ -9,9 +9,11 @@ export default function LoginPanel({ history }) {
   const [password, setPassword] = useState();
   const handleSubmit = () => {
     myHistory.push("/login");
-
-
     console.log(username, password);
+
+    // make backend call here
+    
+
     history.push("/search")
   };
   return (
