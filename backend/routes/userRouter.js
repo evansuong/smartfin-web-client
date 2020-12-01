@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const config = require("../config/config");
 
 /**
- * Register a new user
+ * Register a new user 
  */
 router.post("/register", async (req, res) => {
   try {
@@ -106,7 +106,8 @@ router.get("/", async (req, res) => {
   const user = maintain.find(verifiedId);
   res.json({
     displayName: user.displayName,
-    id: user._id
+    id: user._id,
+    rides:user.rides
   })
 });
 

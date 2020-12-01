@@ -3,7 +3,9 @@ const auth = require("../middleware/auth");
 const maintain = require("../middleware/maintain");
 
 /**
- * This adds a ride to the user's favorite ride
+ * This adds a ride to the user's favorite ride. 
+ * Requests to this 
+ * @header {String}
  */
 router.post("/addRide", async (req, res) => {
   try {
