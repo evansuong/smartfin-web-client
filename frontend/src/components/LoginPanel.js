@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, Link, withRouter } from "react-router-dom";
 import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
 import '../styles/LoginPanel.css';
 
@@ -12,12 +12,12 @@ export default function LoginPanel({ history }) {
     console.log(username, password);
 
     // make backend call here
-    
 
     history.push("/search")
   };
+
   return (
-    <>
+    <div className="login-form">
       <form autoComplete="off">
         <br />
         <FormControl>
@@ -49,10 +49,10 @@ export default function LoginPanel({ history }) {
           />
         </FormControl>
       </form>
-      <Button style={{ marginTop: '20px' }} onClick={handleSubmit}>
+      <Button style={{ marginTop: '20px', marginBottom: '20px' }} onClick={handleSubmit}>
         Login
       </Button>
-      <div className="login-panel__padding" style={{ margin: "20px" }}> </div>
-    </>
+      {/* <div className="login-panel__padding" style={{ margin: "20px" }}> </div> */}
+    </div>
   );
 }
