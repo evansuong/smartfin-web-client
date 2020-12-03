@@ -6,6 +6,17 @@ import '../styles/LoginPanel.css';
 
 export default function LoginPanel({ history }) {
   const myHistory = useHistory();
+  const [username, setUserName] = useState();
+  const [password, setPassword] = useState();
+  const handleSubmit = () => {
+    myHistory.push("/login");
+    console.log(username, password);
+
+    // make backend call here
+    
+
+    history.push("/search")
+  };
   return (
     <>
       <form autoComplete="off">
