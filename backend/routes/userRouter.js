@@ -4,10 +4,9 @@ const auth = require("../middleware/auth");
 const maintain = require("../middleware/maintain");
 const jwt = require("jsonwebtoken");
 const config = require("../config/config");
-const { find } = require("../models/userModel");
 
 /**
- * Register a new user
+ * Register a new user 
  */
 router.post("/register", async (req, res) => {
   try {
@@ -80,14 +79,15 @@ router.delete("/delete", async (req, res) => {
  */
 router.post("/tokenIsValid", async (req, res) => {
   try {
-    const token = req.header("auth-token");
+    const token = req.header("auth-token"); 
     if (!token) return res.json(false);
-    const verifiedId = auth.auth(token);
+    const verifiedId = await auth.auth(token);
     if (verifiedId == null) {
       return res.json(false);
     }
+    console.log(verifiedId.data);
     const user = await maintain.find(verifiedId);
-    if (!user) {
+    if (user == null) {
       return res.json(false);
     }
     return res.json(true);
@@ -97,8 +97,18 @@ router.post("/tokenIsValid", async (req, res) => {
   }
 });
 
+/**
+ * This will find the user and return the users displayName and id 
+ */
 router.get("/", async (req, res) => {
-
+  const token = req.header("auth-token");
+  const verifiedId = auth.auth(token);
+  const user = maintain.find(verifiedId);
+  res.json({
+    displayName: user.displayName,
+    id: user._id,
+    rides:user.rides
+  })
 });
 
 
