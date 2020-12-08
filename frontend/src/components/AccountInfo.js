@@ -34,12 +34,22 @@ const useStyles = makeStyles( (theme) => ({
 }));
 
 
-export default function OutlinedCard() {
+export default function OutlinedCard({ user }) {
   const classes = useStyles();
   const [editMode, setEditMode] = useState(true);
   const [action, setAction] = useState("Edit");
 
+  let fname = user.fname;
+  let lname = user.lname;
+  let email = user.email;
+
   const toggleEdit = () => {
+    if(fname !== user.fname || lname !== user.lname || email !== user.email){
+      console.log("Change!");
+      //push to backend
+    }
+
+
     setEditMode(!editMode);
   }
 
@@ -56,25 +66,40 @@ export default function OutlinedCard() {
       <CardContent>
         <div className={classes.text}>
           <TextField
+              onChange={
+                (e) => {
+                  fname = e.target.value
+                }
+              }
               id="standard-read-only-input"
               label="First"
-              defaultValue="First"
+              defaultValue={user.fname}
               InputProps={{
                   readOnly: editMode
               }}
           />
           <TextField
+              onChange={
+                (e) => {
+                  lname = e.target.value
+                }
+              }
               id="standard-read-only-input"
               label="Last"
-              defaultValue="Last"
+              defaultValue={user.lname}
               InputProps={{
                   readOnly: editMode
               }}
           />
           <TextField
+              onChange={
+                (e) => {
+                  email = e.target.value
+                }
+              }
               id="standard-read-only-input"
               label="Email"
-              defaultValue="Email"
+              defaultValue={user.email}
               InputProps={{
                   readOnly: editMode
               }}

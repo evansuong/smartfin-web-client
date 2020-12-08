@@ -4,6 +4,8 @@ import '../styles/AccountSettings.css';
 
 
 import InfoCard from '../components/AccountInfo'
+import ResetPassword from  '../components/ResetPassword'
+import UserRides from '../components/UserRides'
 
 import PropTypes from 'prop-types';
 import SwipeableViews from 'react-swipeable-views';
@@ -13,6 +15,25 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+
+
+const currentUser = {
+    fname: "John",
+    lname: "Bob",
+    email: "bobjohn@gmail.com",
+    password: "abcdef",
+    rides : [
+        100,
+        200,
+        300,
+        150,
+        250,
+        350,
+        400,
+        450,
+        500
+    ]
+}
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -105,13 +126,13 @@ export default function AccountSettings({ history, location }) {
                     onChangeIndex={handleChangeIndex}
                 >
                     <TabPanel value={value} index={0} dir={theme.direction}>
-                        <InfoCard />
+                        <InfoCard user={currentUser} />
                     </TabPanel>
                     <TabPanel value={value} index={1} dir={theme.direction}>
-                        <div style={{color: 'pink'}}>Texthfkdjs</div>
+                        <ResetPassword user={currentUser} />
                     </TabPanel>
                     <TabPanel value={value} index={2} dir={theme.direction}>
-                        <div style={{color: 'green'}}>Texthfkdjs</div>
+                        <UserRides user={currentUser} />
                     </TabPanel>
                 </SwipeableViews>
             </div>
