@@ -58,7 +58,7 @@ export default function ViewMenu({ currentView, setCurrentView }) {
                 TabIndicatorProps={{
                     style: isDesktopView ? { height: '100%' } : { width: '100%' } 
                 }}
-                disableTouchRipple
+                disableRipple={true}
             >
                 <Tab label="Session" {...a11yProps(0)}/>
                 <Tab label="Local" {...a11yProps(1)}/>

@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
-import '../styles/LoginPanel.css';
+import '../../styles/LoginPanel.css';
 
 export default function LoginPanel({ history }) {
-  const myHistory = useHistory();
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+
   const handleSubmit = () => {
-    myHistory.push("/login");
     console.log(username, password);
 
     // make backend call here
@@ -16,10 +15,11 @@ export default function LoginPanel({ history }) {
 
     history.push("/search")
   };
+
   return (
-    <>
+    <div className="landing-form-container__login-panel">
       <form autoComplete="off">
-        <br />
+
         <FormControl>
           <InputLabel htmlFor="component-simple">Username</InputLabel>
           <Input
@@ -33,8 +33,7 @@ export default function LoginPanel({ history }) {
             onSubmit={handleSubmit}
           />
         </FormControl>
-        <br />
-        <br />
+      
         <FormControl>
           <InputLabel htmlFor="component-simple">Password</InputLabel>
           <Input
@@ -52,7 +51,6 @@ export default function LoginPanel({ history }) {
       <Button style={{ marginTop: '20px' }} onClick={handleSubmit}>
         Login
       </Button>
-      <div className="login-panel__padding" style={{ margin: "20px" }}> </div>
-    </>
+    </div>
   );
 }

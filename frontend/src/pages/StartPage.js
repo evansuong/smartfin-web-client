@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
-import LoginPanel from '../components/LoginPanel'
 import '../styles/StartPage.css'
 import title from '../res/title.png'
+import LandingForm from '../components/landing-form/LandingForm'
 
+
+const projectMessage = 
+"The Smartfin Project aims to unite the surfing community and the research community \
+in an effort to fill this gap in our oceanographic data. It began years ago with the \
+collaborative vision of Scientists and Researchers working with the Scripps Institute \
+of Oceanography, who hoped to innovate a new way to model the behaviour of our oceans."
 
 /**
  * StartPage is where the user is routed to when they first enter the webpage
@@ -28,7 +34,7 @@ export default function StartPage({ history }) {
             borderRadius: '10000px',
             top: '300px'
         }, 
-        login: {
+        form: {
             opacity: '1',
             transitionDelay: '.4s',
             zIndex: 999,
@@ -43,7 +49,7 @@ export default function StartPage({ history }) {
             opacity: '1',
             zIndex: 999,
         },
-        login: {
+        form: {
             opacity: '0',
             zIndex:-1,
         }
@@ -76,23 +82,8 @@ export default function StartPage({ history }) {
                 </div>
 
                 {/* login panel (hidden by default) */}
-                <div onMouseLeave={() => setOutside(true)} className="login-panel" style={startPageStyle.login}>
-                    <LoginPanel history={history} clicked={clicked}></LoginPanel>
-                </div>
-            </div>
-         
-            {/* video section */}
-            <div className="start-page__info-panel">
-                <div className="info-panel__description">
-                    <p>The Smartfin Project aims to unite the surfing community and the research community in an effort to fill this gap in our oceanographic data. It began years ago with the collaborative vision of Scientists and Researchers working with the Scripps Institute of Oceanography, who hoped to innovate a new way to model the behaviour of our oceans.</p>
-                </div>
-                <div className="info-panel__video">
-                    <iframe className="video"
-                        title="REU Video"
-                        src="https://www.youtube.com/embed/rY145HV-ReM" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;" 
-                    />
+                <div onMouseLeave={() => setOutside(true)} className="landing-form" style={startPageStyle.form}>
+                    <LandingForm history={history}></LandingForm>
                 </div>
             </div>
         </div>
