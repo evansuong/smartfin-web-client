@@ -1,0 +1,35 @@
+.user-page {
+    height: auto;
+}
+
+.header {
+    background-color: #04213bff;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    position: sticky;
+    top: 70px;
+    z-index: 998;
+}
+
+.header__title {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1vh;
+}
+
+.title {
+    font-weight: 500;
+    font-size: x-large;
+}
+
+.body {}
+
+@media(max-width: 768px) {
+    .body {
+        flex-direction: column;
+    }
+}

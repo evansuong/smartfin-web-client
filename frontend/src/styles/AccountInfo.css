@@ -1,0 +1,10 @@
+.info {
+    color: aqua;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.info TextField {
+    margin: 10px;
+}

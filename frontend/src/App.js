@@ -13,6 +13,10 @@ import SearchPage from './pages/SearchPage'
 import UserPage from './pages/UserPage';
 import Navbar from './components/Navbar';
 
+//testing
+import AccountSettings from './pages/AccountSettings';
+import LoginPage from './pages/LoginPage';
+
 
 // override default MaterialUI themes for MaterialUI components
 const muiTheme = createMuiTheme({
@@ -79,6 +83,10 @@ function App() {
 
               {/* page routes */}
               <Switch>
+                {/* test route */}
+                <Route path="/test" exact component={AccountSettings}/>
+                <Route path="/login" component={LoginPage}/>
+
                 <Route path="/" exact component={StartPage} />
                 <Route path="/main" component={MainPage} />
                 <Route path="/user" component={UserPage} />

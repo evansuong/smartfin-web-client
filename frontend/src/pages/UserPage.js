@@ -1,19 +1,26 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import '../styles/UserPage.css';
 
-export default function UserPage() {
+// start page will get data from search page
+export default function UserPage({ history, location }) {
 
-    
+
 
     return (
-        <div>
-            <h1>
-                user info page
-            </h1>
-            <Link to="/main">
-                back
-            </Link>
+        <div className="user-page">
+
+            {/* header displays ride name, location, and search button */}
+            <div className="header">
+                <div className="header__title">
+                    <div className="title">Login</div>
+                </div>
+            </div>
+
+            <div className="login">
+
+            </div>
+
         </div>
-        
     )
-}
+} 
