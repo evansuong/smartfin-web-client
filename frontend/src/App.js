@@ -18,6 +18,7 @@ import Navbar from './components/Navbar';
 //testing
 import AccountSettings from './pages/AccountSettings';
 import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 
 // override default MaterialUI themes for MaterialUI components
@@ -104,6 +105,7 @@ function App() {
                 {/* test route */}
                 <Route path="/test" exact component={AccountSettings}/>
                 <Route path="/login" component={LoginPage}/>
+                <Route path="/reg" component={RegisterPage}/>
 
                 <Route path="/" exact component={StartPage} />
                 <Route path="/main" component={MainPage} />

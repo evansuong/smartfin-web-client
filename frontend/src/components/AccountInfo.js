@@ -39,17 +39,25 @@ export default function OutlinedCard({ user }) {
   const [editMode, setEditMode] = useState(true);
   const [action, setAction] = useState("Edit");
 
-  let fname = user.fname;
-  let lname = user.lname;
-  let email = user.email;
+  const[fname, setFname] = useState();
+  const[lname, setLname] = useState();
+  const[email, setEmail] = useState();
+
+  useEffect(()=>{
+    console.log(user)
+    if(user){
+      console.log('change?')
+      setFname(user.name);
+      setLname("N/A");
+      setEmail(user.email);
+    }
+  },[user])
 
   const toggleEdit = () => {
     if(fname !== user.fname || lname !== user.lname || email !== user.email){
       console.log("Change!");
       //push to backend
     }
-
-
     setEditMode(!editMode);
   }
 
@@ -68,12 +76,12 @@ export default function OutlinedCard({ user }) {
           <TextField
               onChange={
                 (e) => {
-                  fname = e.target.value
+                  setFname(e.target.value);
                 }
               }
               id="standard-read-only-input"
               label="First"
-              defaultValue={user.fname}
+              value={fname}
               InputProps={{
                   readOnly: editMode
               }}
@@ -81,12 +89,12 @@ export default function OutlinedCard({ user }) {
           <TextField
               onChange={
                 (e) => {
-                  lname = e.target.value
+                  setLname(e.target.value);
                 }
               }
               id="standard-read-only-input"
               label="Last"
-              defaultValue={user.lname}
+              value={lname}
               InputProps={{
                   readOnly: editMode
               }}
@@ -94,12 +102,12 @@ export default function OutlinedCard({ user }) {
           <TextField
               onChange={
                 (e) => {
-                  email = e.target.value
+                  setEmail(e.target.value);
                 }
               }
               id="standard-read-only-input"
               label="Email"
-              defaultValue={user.email}
+              value={email}
               InputProps={{
                   readOnly: editMode
               }}

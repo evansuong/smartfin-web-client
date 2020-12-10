@@ -4,7 +4,7 @@ import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
 import axios, { AxiosResponse } from 'axios'
 import '../styles/LoginPanel.css';
 
-const api = 'https://virtserver.swaggerhub.com/Anshul-Birla/SmartFin1/1.0.0/'
+const api = 'http://localhost:9000'
 
 export default function LoginPanel({ history }) {
   const myHistory = useHistory();
@@ -12,17 +12,20 @@ export default function LoginPanel({ history }) {
   const [password, setPassword] = useState();
   const handleSubmit = () => {
     myHistory.push("/login");
-    console.log(email, password);
+    console.log(typeof(email), typeof(password));
 
     const data = {
       "email": email,
       "password": password
-    }
+    };
 
     loginUser(data).then((res)=>{
       console.log("Success");
       console.log(res);
-      history.push("/test")
+      history.push({
+        pathname: '/test',
+        state: res
+      })
     })
 
 
@@ -33,8 +36,8 @@ export default function LoginPanel({ history }) {
       axios
         .post(
           api +
-            'users/login/',
-          data
+            '/users/login/',
+          data,
         )
         .then((res) => {
           console.log(res)
@@ -42,7 +45,7 @@ export default function LoginPanel({ history }) {
         })
         .catch((error) => {
           console.log(error)
-          alert("Wrong Credentials")
+          // alert("Wrong Credentials")
           reject(error);
         });
     });

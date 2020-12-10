@@ -83,8 +83,20 @@ export default function AccountSettings({ history, location }) {
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
-    
+    const [currentUser, setCurrentUser] = useState();
     const [name, setName] = useState('');
+
+    useEffect(()=>{
+        setCurrentUser(location.state.user)
+    },[location.state])
+
+    //test
+    useEffect(()=>{
+        if(currentUser){
+            setName(currentUser.name)
+        }
+        console.log(currentUser)
+    },[currentUser])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -132,7 +144,7 @@ export default function AccountSettings({ history, location }) {
                         <ResetPassword user={currentUser} />
                     </TabPanel>
                     <TabPanel value={value} index={2} dir={theme.direction}>
-                        <UserRides user={currentUser} />
+                        {/* <UserRides user={currentUser} /> */}
                     </TabPanel>
                 </SwipeableViews>
             </div>
