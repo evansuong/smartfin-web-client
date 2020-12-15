@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
+import { RideContext } from '../contexts/RideContext';
 
 const mapStyles = {
   margin: '8px',
@@ -8,18 +9,19 @@ const mapStyles = {
 };
 
 export function MapContainer (props) {
-  console.log(props.rideDate.rideId);
   
   const [showInfo, setShowInfo] = useState(false);
   const [activeMarker, setActiveMarker] = useState({});
   const [selectedPlace, setSelectedPlace] = useState({});
   const [rides, setRides] = useState([]);
+  const { rideState } = useContext(RideContext)
+  const { rideId } = rideState;
   // const [bounds, setBounds] = useState(new props.google.maps.LatLngBounds());
 
   //get all the rides
   useEffect(() => {
     getRides();
-  }, [])
+  }, [rideState])
 
   // useEffect(() => {
   //   let bound = new props.google.maps.LatLngBounds();
@@ -35,7 +37,7 @@ export function MapContainer (props) {
   //get all rides
   const getRides = async () => {
     //currently gets a single ride bcause database is empty
-    let pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides/rideId=${props.rideDate.rideId}?format=json`);
+    let pog = await fetch(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/rideId=${rideId}`);
     let item = await pog.json();    
     
     console.log(item); 

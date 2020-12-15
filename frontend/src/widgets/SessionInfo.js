@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { RideContext } from '../contexts/RideContext';
 
 
 
-export default function SessionInfo({ rideData }) {
+export default function SessionInfo() {
 
-    const { startTime, endTime } = rideData;
-    const [renderedData, setRenderedData] = useState({
-       
+    const [renderedData, setRenderedData] = useState({  
     })
+
+    const { rideState } = useContext(RideContext);
+    const { startTime, endTime } = rideState;
+    console.log("RIDESTATE IN SESSIONINFO", rideState.rideState)
 
     // TODO: FETCH ALL RIDES IN LOCATION FROM API
 
@@ -23,7 +26,7 @@ export default function SessionInfo({ rideData }) {
             date: date,
         })
         
-    }, [rideData])
+    }, [rideState])
 
     return (
         <div>

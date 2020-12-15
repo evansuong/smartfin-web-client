@@ -1,7 +1,6 @@
-import { AppReducer } from "../reducers/AppReducer";
-import React from 'react'
+import React, { createContext, useReducer } from 'react'
+import { AppReducer } from "../reducers/Reducers";
 
-const { createContext, useReducer } = require("react");
 
 // CONTEXT HOLDS THE GLOBAL APP STATE, ALL THE DATA HERE CAN BE SEEN BY THE WHOLE APP
 export const AppContext = createContext()
@@ -22,9 +21,10 @@ const AppState = {
 const AppContextProvider = (props) => {
 
     const [appState, dispatch] = useReducer(AppReducer, AppState);
+    const appDispatch = dispatch;
 
     return (
-        <AppContext.Provider value={{ appState, dispatch }}>
+        <AppContext.Provider value={{ appState, appDispatch }}>
             {props.children}
         </AppContext.Provider>
     )

@@ -1,19 +1,31 @@
-import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
+import React, { useState, useContext } from 'react';
 import { FormControl, InputLabel, Input, Button } from '@material-ui/core';
 import '../../styles/LoginPanel.css';
+import { UserAPI } from '../../apis/controllers';
+import { UserContext } from '../../contexts/UserContext';
 
 export default function LoginPanel({ history }) {
-  const [username, setUserName] = useState();
-  const [password, setPassword] = useState();
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSubmit = () => {
+  const { userDispatch } = useContext(UserContext);
+
+  const handleSubmit = async () => {
     console.log(username, password);
 
     // make backend call here
-    
+    const response = await UserAPI.loginUser(username, password)
 
-    history.push("/search")
+    if(response.status) {
+      userDispatch({
+        type: 'SET_USER',
+        payload: response.data
+      });
+      history.push("/search");
+    } else {
+      setErrorMsg(response.data);
+    }
   };
 
   return (
@@ -26,6 +38,7 @@ export default function LoginPanel({ history }) {
             type="text"
             id="component-simple"
             value={username}
+            onClick={() => setErrorMsg('')}
             onChange={(e) => {
               e.preventDefault();
               setUserName(e.target.value);
@@ -40,6 +53,7 @@ export default function LoginPanel({ history }) {
             type="password"
             id="component-simple"
             value={password}
+            onClick={() => setErrorMsg('')}
             onChange={(e) => {
               e.preventDefault();
               setPassword(e.target.value);
@@ -48,6 +62,10 @@ export default function LoginPanel({ history }) {
           />
         </FormControl>
       </form>
+      <div style={{ color: "red" }}>
+        {errorMsg}
+      </div>
+
       <Button style={{ marginTop: '20px' }} onClick={handleSubmit}>
         Login
       </Button>

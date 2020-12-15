@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import '../../styles/LandingForm.css'
 
 // styling for Tabs component, documented in materialUI docs
+// make the input forms keep the input field labels dark cuz making them white looks weird
 const tabStyles = {
     root: {
         background: 'transparent',

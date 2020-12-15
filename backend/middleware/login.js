@@ -26,7 +26,7 @@ async function registerNewUser(email, password, passwordCheck, displayName,) {
 
   //password must be typed correctly twice
   if (password != passwordCheck)
-    return { msg: "Enter the same password twice" };
+    return { msg: "Passwords must match" };
 
   //user must not exist already
   const existingUser = await user.findOne({ email: email })
@@ -50,7 +50,8 @@ async function registerNewUser(email, password, passwordCheck, displayName,) {
 
   //save to database 
   const savedUser = await newUser.save();
-  return savedUser;
+  console.log("SAVED USER 53", savedUser)
+  return savedUser._id;
 
 }
 
@@ -76,7 +77,7 @@ async function login(email, password) {
   if (!passwordMatch)
     return null;
 
-  return loginUser;
+  return loginUser._id;
 
 }
 

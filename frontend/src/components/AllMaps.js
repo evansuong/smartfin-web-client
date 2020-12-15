@@ -35,8 +35,7 @@ export function MapContainer (props) {
     let pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides`);
     let item = await pog.json();    
     
-    console.log(item); 
-    
+    console.log(item);  
     setRides(item);
   }
 

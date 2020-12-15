@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types'
+import { RideContext } from '../contexts/RideContext';
 
-export default function TemplateWidget({rideData}) {
+export default function TemplateWidget() {
    
+    const { rideState } = useContext(RideContext)
+    // console.log("TEMPLATEWIDGET 8")
     // obtain list of the keys of the ride data because 
-    const keys = Object.keys(rideData)
+    const keys = Object.keys(rideState)
 
     return (
         <div>
             {keys.map((key) => (
-                <div key={key}>{key}: {rideData[key]}</div>
+                <div key={key}>{key}: {rideState[key]}</div>
             ))}
         </div>
     )

@@ -1,9 +1,9 @@
 .search-page {
-    height: 100%;
+    height: 92vh;
+    align-self: stretch;
     display: flex;
-    flex-flow: column wrap;
-    background-color: rgba(255, 255, 255, .8);
-    color: blue;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 #search-title {
@@ -13,6 +13,7 @@
     align-self: stretch;
     padding: 10px;
     margin: 0px;
+    font-weight: 300;
     background-color: #04213bff;
 }
 
@@ -21,33 +22,42 @@
     padding: 1vh;
 }
 
-.row {
+.body {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-evenly;
+    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
 }
 
-.col-1 {
-    display: flex;
-    flex-flow: column wrap;
-    flex-grow: 1;
-    flex-shrink: 1;
-    margin: 15px;
-    justify-content: center;
-    /* align-items: center; */
+.body * {
+    margin: 15;
+    width: '100%';
 }
 
-.col-2 {
+.list-container {
     display: flex;
-    flex-flow: column wrap;
-    flex-grow: 1;
-    flex-shrink: 1;
-    margin: 15px;
-    justify-content: center;
-    /* align-items: center; */
+    flex-direction: column;
+    width: 275px;
+    border-right-width: 1px;
+    border-right-color: gray;
+    border-right-style: solid;
+    height: 1000px;
 }
 
+.ride-entry {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    color: 'black';
+    background-color: green;
+}
+
+.ride-entry__ride-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+ 
 form {
     display: flex;
     flex-flow: column wrap;
@@ -60,9 +70,7 @@ FormHelperText {
     justify-self: center;
 }
 
-#interface {
-    border-left: 2px solid #04213bff;
-}
+
 
 .requested-ride {
     display: flex;

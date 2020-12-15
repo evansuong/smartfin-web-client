@@ -10,10 +10,10 @@ function RandomRide(props){
         //columns of ride number, location, date
         <div className='ride-row'>
             <div className='column' onClick={() => {
-                history.push({
-                    pathname: "/main",
-                    state: props.ride
-                })
+                // history.push({
+                //     pathname: "/main",
+                //     state: props.ride
+                // })
             }} >
                RideID: {props.ride.rideId}
             </div>

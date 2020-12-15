@@ -12,15 +12,14 @@ const { find } = require("../models/userModel");
 router.post("/register", async (req, res) => {
   try {
     const { email, password, passwordCheck, displayName } = req.body;
+    console.log('IN REGISTER', email, password, passwordCheck, displayName)
 
     const savedUser = await login.registerNewUser(email, password, passwordCheck, displayName);
-
     if (savedUser.hasOwnProperty("msg")) {
       res.status(400).json(savedUser);
     } else {
       res.json(savedUser);
     }
-
   } catch (err) {
     res.status(500).json({ error: err.message });
     console.log(err);

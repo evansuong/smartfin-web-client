@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import '../styles/WidgetArea.css';
 
 
@@ -10,6 +10,7 @@ import SessionInfo from '../widgets/SessionInfo';
 import LocationAverage from '../widgets/LocationAverage';
 
 import Mappo from './MapRide';
+import { RideContext } from '../contexts/RideContext';
 
 
 /*
@@ -29,27 +30,27 @@ const Widgets = {
     ride: {
         rideWidget1: {
             titleText: 'RideWidget1', 
-            bodyComponent: HeightChart, 
+            bodyComponent: <HeightChart/>, 
             gridItem: 'main',
-            queryString: ''
+            queryString: '',
         },
         rideWidget2: {
             titleText: 'Wave Height', 
-            bodyComponent: HeightChart, 
+            bodyComponent: <HeightChart/>, 
             gridItem: 'side',
             queryString: ''
         },
         rideWidget3: {
             titleText: 'Ocean Temperature', 
-            bodyComponent: TemplateWidget, 
+            bodyComponent: <SessionInfo/>, 
             gridItem: 'left-square',
             queryString: ''
         },
         rideWidget4: {
-            titleText: 'RideWidget4', 
-            bodyComponent: SessionInfo, 
+            titleText: 'On Location', 
+            bodyComponent: <HeightChart/>, 
             gridItem: 'right-square',
-            queryString: ''
+            queryString: '',
         },
     },
     multiple: {
@@ -79,12 +80,15 @@ const viewToWidgetType = {
 }
 
 
-export default function WidgetArea({ currentView, currentRideData }) {
+export default function WidgetArea({ currentView }) {
     
     const [widgetList, setWidgetList] = useState(Widgets['ride']);
+    const { rideState } = useContext(RideContext)
     let first = true;
+
+    // console.log('RIDESTATE IN WIDGETAREA 90', rideState)
     
-    // set the view 
+    // set the view on view change
     useEffect(() => {
         let viewToRender = viewToWidgetType[currentView];
         setWidgetList(Widgets[viewToRender]);
@@ -92,6 +96,7 @@ export default function WidgetArea({ currentView, currentRideData }) {
 
     // map widgets in the current view to the widget area
     return (
+        rideState && 
         <>
         {/* {<Mappo />} */}
         <div className="widget-grid">
@@ -99,19 +104,14 @@ export default function WidgetArea({ currentView, currentRideData }) {
             {/* map all the widgets in widgetList to the area */}
             {Object.keys(widgetList).map((key, index) => {
                 let widgetData = widgetList[key];
+                // console.log("WIDGETMAP 109", widgetData)
 
                 if(first){
                     first = false;
-                    return ( <Mappo rideDate={currentRideData}/> )
+                    return ( <Mappo rideDate={rideState}/> )
                 }
 
-                return (
-                    <>                    
-                        
-                        <Widget key={index} {...widgetData} rideData={currentRideData}/>); 
-                        {/* <div>pog</div> */}
-                    </> 
-                )
+                return <Widget key={index} {...widgetData}/>
             })}
             
        </div>
@@ -127,10 +127,13 @@ WidgetArea.propTypes = {
 }
 
 // widget class defines a header and body content to show data
-function Widget({ key, titleText, gridItem, bodyComponent, queryString, rideData  }) {
+function Widget({ titleText, gridItem, bodyComponent, queryString  }) {
 
     // const { rideApiFetch } = useFetch()
-    // console.log(key)
+    // console.log(key)4
+    const { rideState } = useContext(RideContext)
+    // console.log("RIDESTATE IN WIDGETAREA WIDGET 137", rideState)
+    // console.log("WIDGET PROPS 136", titleText, gridItem)
 
     return (
         <div className={`widget ${gridItem}`}>
@@ -138,7 +141,7 @@ function Widget({ key, titleText, gridItem, bodyComponent, queryString, rideData
                 {titleText}
             </div>
             <div className="widget__body">
-                {bodyComponent({rideData})}
+                {bodyComponent}
             </div> 
         </div>
     )

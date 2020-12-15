@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from './contexts/AppContext';
 import Axios from "axios";
-import { UserContext } from './contexts/UserContext';
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 
@@ -17,6 +16,9 @@ import Navbar from './components/Navbar';
 
 // test
 import Map from './components/AllMaps'
+import RideContextProvider from './contexts/RideContext';
+import UserContextProvider, { UserContext } from './contexts/UserContext';
+
 
 
 // override default MaterialUI themes for MaterialUI components
@@ -36,11 +38,11 @@ const muiTheme = createMuiTheme({
 
 function App() {
 
-  const { dispatch } = useContext(AppContext)
-  const [userData, setUserData] = useState({
-    token: undefined,
-    user: undefined
-  });
+  const { appDispatch } = useContext(AppContext)
+  const { userState, userDispatch } = useContext(UserContext);
+  console.log("ISERSTATE APP 43")
+  const { favoriteRides } = userState;
+
   /** 
     useEffect(() => {
       const checkLoggedIn = async () => {
@@ -63,20 +65,26 @@ function App() {
     }, []);
     **/
 
+  async function setUserRides() {
+    
+  }
+
+ 
   // on webpage startup, check if window is desktop or mobile dimensions for responsiveness
   useEffect(() => {
     window.matchMedia("(min-width: 768px)").addListener(handler)
-
     // set global state
-    dispatch({
+    appDispatch({
       type: "SET_WINDOW",
       payload: window.matchMedia('(max-width: 768px)').matches
-    })
+    });
+
+   
   }, [])
 
   // check window size every time the window changes size
   function handler(e) {
-    dispatch({
+    appDispatch({
       type: "SET_WINDOW",
       payload: window.matchMedia('(max-width: 768px)').matches
     })
@@ -84,41 +92,50 @@ function App() {
 
   return (
     <Router>
-      <UserContext.Provider value={userData, setUserData}>
-        <MuiThemeProvider theme={muiTheme}>
-          <div className="app">
-            <Navbar />
-            <div className="app__page">
-
-              {/* page routes */}
-              <Switch>
-                <Route path="/" exact component={StartPage} />
-                <Route path="/main" component={MainPage} />
-                <Route path="/user" component={UserPage} />
-                <Route path="/search" component={SearchPage} />
-                {/* test */}
-                <Route path="/test" component={Map} />
-              </Switch>
-            </div>
-            {/* footer with links to project related websites */}
-            <div className="footer">
-              <div></div>
-              <Link to="/">
-                <img
-                  className="footer__icon"
-                  src={logo}
-                  alt="link to homepage"
-                />
-              </Link>
-              <div className="footer__links">
-                <a href="http://e4e.ucsd.edu/smartfin">e4e</a>
-                <a href="https://smartfin.org/">smartfin website</a>
-                <a href="https://www.surfrider.org/programs/smartfin">surfrider</a>
+      <UserContextProvider>
+        <RideContextProvider>
+          <MuiThemeProvider theme={muiTheme}>
+            <div className="app">
+              <Navbar />
+              <div className="app__page">
+                {/* page routes */}
+                <Switch>
+                  <Route path="/" exact component={StartPage} />
+                  <Route path="/main" component={MainPage} />
+                  <Route path="/user" component={UserPage} />
+                  <Route path="/search" component={SearchPage} />
+                  {/* test */}
+                  <Route path="/test" component={Map} />
+                </Switch>
               </div>
+              {/* footer with links to project related websites */}
+              <div className="footer-container">
+                <div className="footer">
+                  <div></div>
+                  <Link to="/">
+                    <img
+                      className="footer__icon"
+                      src={logo}
+                      alt="link to homepage"
+                    />
+                  </Link>
+                  <div className="footer__links">
+                    <a href="http://e4e.ucsd.edu/smartfin">
+                      <img src={require("./res/e4e-icon.png")}/> 
+                      e4e</a>
+                    <a href="https://smartfin.org/">
+                      <img src={require("./res/smartfin-icon.jpg")}/>
+                      smartfin website</a>
+                    <a href="https://www.surfrider.org/programs/smartfin">
+                      <img src={require("./res/surfrider-icon.png")}/>
+                      surfrider</a>
+                  </div>
+                </div>
+              </div>          
             </div>
-          </div>
-        </MuiThemeProvider>
-      </UserContext.Provider>
+          </MuiThemeProvider>
+        </RideContextProvider>
+      </UserContextProvider>       
     </Router>
   );
 }
