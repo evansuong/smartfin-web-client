@@ -23,7 +23,7 @@ export default function MainPage({ history, location }) {
 	return (
 		<div className="main-page">
 			{/* header displays ride name, location, and search button */}
-			<div className="header">
+			<div className="main-page__header">
 				<div className="header__title">
 					<div className="title__id">{rideState.rideId}</div>
 					<div className="title__location">{rideState.loc1}, {rideState.loc3}</div>
@@ -38,7 +38,7 @@ export default function MainPage({ history, location }) {
 			</div>
 
 			{/* widget area and view menu */}
-			<div className="body">
+			<div className="main-page__body">
 				<ViewMenu currentView={currentView} setCurrentView={setCurrentView} />
 				<WidgetArea currentRideData={rideState} currentView={currentView}/>                   
 			</div>

@@ -22,6 +22,7 @@ export default function LoginPanel({ history }) {
         type: 'SET_USER',
         payload: response.data
       });
+      console.log(response.data)
       history.push("/search");
     } else {
       setErrorMsg(response.data);

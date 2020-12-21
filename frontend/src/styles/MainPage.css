@@ -2,7 +2,7 @@
     height: auto;
 }
 
-.header {
+.main-page__header {
     background-color: #04213bff;
     display: flex;
     flex-direction: row;
@@ -34,7 +34,7 @@
     font-size: x-large;
 }
 
-.body {
+.main-page__body {
     display: flex;
     height: auto;
     background-color: rgba(255, 255, 255, .8);

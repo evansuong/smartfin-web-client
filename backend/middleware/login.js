@@ -61,8 +61,13 @@ async function registerNewUser(email, password, passwordCheck, displayName,) {
  * @param {String} password     Password user entered
  */
 async function login(email, password) {
+  if (email === "" || password == "") 
+    return { msg: "Not all fields have been entered" };
+  
+
   if (!email || !password)
     return { msg: "Not all fields have been entered" };
+
 
   const loginUser = await user.findOne({
     email: email

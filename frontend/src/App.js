@@ -19,6 +19,9 @@ import Map from './components/AllMaps'
 import RideContextProvider from './contexts/RideContext';
 import UserContextProvider, { UserContext } from './contexts/UserContext';
 
+import e4eIcon from "./res/e4e-icon.png"
+import smartfinIcon from "./res/smartfin-icon.jpg"
+import surfriderIcon from "./res/surfrider-icon.png"
 
 
 // override default MaterialUI themes for MaterialUI components
@@ -120,15 +123,29 @@ function App() {
                     />
                   </Link>
                   <div className="footer__links">
-                    <a href="http://e4e.ucsd.edu/smartfin">
-                      <img src={require("./res/e4e-icon.png")}/> 
-                      e4e</a>
-                    <a href="https://smartfin.org/">
-                      <img src={require("./res/smartfin-icon.jpg")}/>
-                      smartfin website</a>
-                    <a href="https://www.surfrider.org/programs/smartfin">
-                      <img src={require("./res/surfrider-icon.png")}/>
-                      surfrider</a>
+                    <a className="link-wrapper" href="http://e4e.ucsd.edu/smartfin">
+                      e4e
+                      <img 
+                        src={e4eIcon}
+                        className="footer-link-icon"
+                        alt="Link to Engineers for Exploration website"
+                      /> 
+                    </a>
+                    <a className="link-wrapper" href="https://smartfin.org/">
+                      smartfin website
+                      <img 
+                        src={smartfinIcon}
+                        className="footer-link-icon"
+                        alt="Link to Smartfin Official website"
+                      />
+                    </a>
+                    <a className="link-wrapper" href="https://www.surfrider.org/programs/smartfin">
+                      surfrider
+                      <img 
+                        src={surfriderIcon} 
+                        className="footer-link-icon"
+                        alt="Link to Surfrider feature on Smartfin"/>
+                    </a>
                   </div>
                 </div>
               </div>          

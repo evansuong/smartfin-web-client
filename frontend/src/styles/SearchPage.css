@@ -23,9 +23,8 @@
 }
 
 .body {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     align-items: center;
 }
 
@@ -37,25 +36,48 @@
 .list-container {
     display: flex;
     flex-direction: column;
-    width: 275px;
+    align-items: stretch;
     border-right-width: 1px;
     border-right-color: gray;
     border-right-style: solid;
-    height: 1000px;
+    height: 78vh;
+    padding: 20px;
+    overflow-y: auto;
 }
+
+.list-container__title {
+    display: flex;
+    justify-content: center;
+    color: darkblue;
+    font-weight: 500;
+}
+
 
 .ride-entry {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    padding: 10px 20px;
+    margin: 0px 20px;
     color: 'black';
-    background-color: green;
+}
+
+.ride-entry:hover {
+    background-color: #DDD;
 }
 
 .ride-entry__ride-name {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    color: #000;
+}
+
+.ride-entry__ride-location {
+    display: flex;
+    justify-content: flex-start;
+    width: inherit;
+    font-style: italic;
+    color: #888;
+    font-size: small;
 }
  
 form {
@@ -69,8 +91,6 @@ form {
 FormHelperText {
     justify-self: center;
 }
-
-
 
 .requested-ride {
     display: flex;

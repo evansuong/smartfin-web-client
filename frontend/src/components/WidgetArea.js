@@ -11,6 +11,8 @@ import LocationAverage from '../widgets/LocationAverage';
 
 import Mappo from './MapRide';
 import { RideContext } from '../contexts/RideContext';
+import MultipleHeightChart from '../widgets/MultipleHeightChart';
+import TemperatureChart from '../widgets/TemperatureChart';
 
 
 /*
@@ -29,8 +31,8 @@ function widgetTemplate(title, body, gridItem, qString) {
 const Widgets = {
     ride: {
         rideWidget1: {
-            titleText: 'RideWidget1', 
-            bodyComponent: <HeightChart/>, 
+            titleText: '', 
+            bodyComponent: <Mappo/>, 
             gridItem: 'main',
             queryString: '',
         },
@@ -42,13 +44,13 @@ const Widgets = {
         },
         rideWidget3: {
             titleText: 'Ocean Temperature', 
-            bodyComponent: <SessionInfo/>, 
+            bodyComponent: <TemperatureChart/>, 
             gridItem: 'left-square',
             queryString: ''
         },
         rideWidget4: {
             titleText: 'On Location', 
-            bodyComponent: <HeightChart/>, 
+            bodyComponent: <MultipleHeightChart/>, 
             gridItem: 'right-square',
             queryString: '',
         },
@@ -96,26 +98,16 @@ export default function WidgetArea({ currentView }) {
 
     // map widgets in the current view to the widget area
     return (
-        rideState && 
         <>
-        {/* {<Mappo />} */}
+        {rideState && 
         <div className="widget-grid">
-            
             {/* map all the widgets in widgetList to the area */}
             {Object.keys(widgetList).map((key, index) => {
                 let widgetData = widgetList[key];
                 // console.log("WIDGETMAP 109", widgetData)
-
-                if(first){
-                    first = false;
-                    return ( <Mappo rideDate={rideState}/> )
-                }
-
                 return <Widget key={index} {...widgetData}/>
-            })}
-            
-       </div>
-       
+            })}            
+       </div>}
        </>
     )
 }

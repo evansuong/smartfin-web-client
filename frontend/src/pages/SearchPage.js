@@ -27,6 +27,9 @@ import '../styles/SearchPage.css'
 import RandomRides from '../components/RandomRides'
 import { RideContext } from '../contexts/RideContext';
 import { UserContext } from '../contexts/UserContext';
+import RideAPI from '../apis/rideController';
+import { getDate, setDate } from 'date-fns';
+import { Input } from '@material-ui/core';
 
 //dictionary to track reducer
 const ACTIONS = {
@@ -43,53 +46,143 @@ const useStyles = makeStyles((theme) => ({
 	  marginTop: theme.spacing(2),
 	},
 	root: {
+		marginTop: '0px',
 		'& > *': {
 		  margin: theme.spacing(1),
-		  width: '25ch',
+			width: '25ch',
+			marginTop: '0px',
 		},
 	  },
 	card: {
 		minWidth: 275,
-		backgroundColor: "transparent"
+		backgroundColor: "transparent",
+		marginTop: '0px',
 	}
   }));
 
 export default function Searches({ history }){
-	//state for tracking the current ride being requested
-	const [req, setReq] = useState('');
+
+	// input fields
+	const [rideID, setRideID] = useState('');
+	const [location, setLocation] = useState('');
+	const [startTime, setStartTime] = useState(new Date());
+	const [endTime, setEndTime] = useState(new Date());
+
+	// error message
+	const [errorMsg, setErrorMsg] = useState('');
+
 	//track type requested
   const [type, setType] = useState('RideID');
   const [favoriteRides, setFavoriteRides] = useState([]);
   const [searchedRides, setSearchedRides] = useState([]);
   //track date
-	const [date1, setDate1] = useState(new Date());
-	const [date2, setDate2] = useState(new Date());
 	const { rideDispatch } = useContext(RideContext);
   const { userState } = useContext(UserContext);
   
 	//store styles
 	const classes = useStyles();
 
-	//update changes of request form
-	const handleTypeChange = (event) => {
-		setType(event.target.value);
-	};
+	// on page load show favorite rides
+  useEffect(async () => {
+		let favRides = await getFavoriteRides()
+		favRides = unixToDateString(favRides)
+		console.log('favorite rides inside date processing', favRides)
+		setFavoriteRides(favRides)
+	}, [])
+
 	//on submit of form, gets the data and sets it, doesn't work directly for some reason
-	function handleSubmit(e){
+	function handleSubmit(e, queryType){
 		e.preventDefault();
-		setReq(e.target[1].value)
+		console.log('getting seached rides')
+		getSearchedRides(queryType);
 	};
-	//update date 1
-	const handleDate1 = (e) => {
-		console.log(e);
+
+	async function handleKeySubmit(e, queryType) {
+		if (e.key === 'Enter' || e.keyCode === 13) {
+			getSearchedRides(queryType);
+		}	
 	}
-	//update date 2
-	const handleDate2 = (e) => {
-		console.log(e);
-  }
+
+	async function getSearchedRides(queryType) {
+		setSearchedRides([])
+		setErrorMsg('')
+		let searchedRides = await fetchRides(queryType);
+		if(searchedRides.length === 0) {
+			console.log("Error");
+			setErrorMsg("No sessions found");
+		} else {
+			searchedRides = unixToDateString(searchedRides);
+			setSearchedRides(searchedRides);
+		}
+	}
+
+	async function fetchRides(queryType) {
+		if(queryType === 'rideId') {
+			let response = await RideAPI.getRideById(rideID);
+			if(response.status) {
+				return [response.data];
+			} else {
+				// TODO REPLACE WITH ERROR CODE MESSAGE
+				return [];
+			}
+		} else {
+			let locationResponse = [];
+			let dateResponse = [];
+			console.log("are starttime and end time initialized:", startTime, endTime)
+			console.log("is location initialized", location)
+			if (startTime !== '' && endTime !== '') {
+
+				// format query
+				let startDate = new Date(startTime);
+				let endDate = new Date(endTime);
+				startDate = parseInt(startDate.getTime() / 1000);
+				endDate = parseInt(endDate.getTime() / 1000);
+
+				// call API for sessions within start and end date
+				dateResponse = await RideAPI.getRideByTime(startDate, endDate);
+				if(dateResponse.status) {
+					dateResponse = dateResponse.data;
+				} else {
+					return [];
+				}
+				//TEMP CODE CAN GET RID OF WHEN I SEND BACK ERROR CODES
+				if(Object.keys(dateResponse)[0] === "Error") return [];
+			}
+			if (location !== '') {
+				// make query
+				locationResponse = await RideAPI.getRideByLocation(location);	
+				if (locationResponse.status) {
+					locationResponse = locationResponse.data;	
+				} else {
+					return [];
+				}
+					//TEMP CODE CAN GET RID OF WHEN I SEND BACK ERROR CODES
+					if(Object.keys(locationResponse)[0] === "Error") return [];
+			}
+
+			// format responses
+			if (dateResponse.length === 0) {
+				console.log('returning location response')
+				return locationResponse;
+			} else if (locationResponse.length === 0) {
+				console.log('returning date response')
+				return dateResponse;
+			} else {
+				// combine results from both sets
+				let dateIds = dateResponse.map(ride => (ride.rideId));
+				let intersection = locationResponse.filter(x => dateIds.includes(x.rideId));
+				console.log('retiurning intersection');
+				return intersection;
+			}
+		}
+	}
   
-  function selectRide(rideId) {
-    let selectedRide = searchedRides.filter(ride => ride.rideId === rideId);
+  function selectRide(rideId, listType) {
+		let selectedRide = listType === 'search' ?
+		 	searchedRides.filter(ride => ride.rideId === rideId)
+		 	:
+			 favoriteRides.filter(ride => ride.rideId === rideId);
+			 
     console.log('SELECTED RIDE SEARCHPAGE 95', selectedRide) 
     rideDispatch({
       type: 'SET_RIDE',
@@ -97,112 +190,71 @@ export default function Searches({ history }){
     });
     history.push('main')
   }
-
-	//update when req updated
-	useEffect(() => {
-		console.log("SEARCHPAGE94 GETTING RIDE DATA")
-    getRideData();
-  }, [req])
-
-  useEffect(() => {
-    getFavoriteRides();
-  }, [])
-
-  console.log("favorite rides 116", favoriteRides.length)
-  console.log("searched rides 117", searchedRides)
-  
-  async function getFavoriteRides() {
-    
-    // let favIds = axios.get()
-    let favIds = ['15692', '16380']; // create this from a get request
-    let favRides = []
-    for await (const item of favIds) {
-      fetch(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/rideId=${item}`)
-      .then(response => response.json())
-      .then(data => {
-				favRides.push(data)
-				console.log(data)
-				setFavoriteRides(favRides)
-			});
-    }
-  }
-
-	//asynchronously fetch the ride data using the fetch API and 
-	let pog;
-	let item;
-	const getRideData = async () => {
-		console.log("SEARCHPAGE115 switch")
-		switch(type){
-			case "RideID":
-				pog = await fetch(`'http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/rideId=${req}?format=json`);
-				item = await pog.json();   
-				setSearchedRides(item);
-				break;
-			case "Location":
-				pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides/location=${req}`);
-				item = await pog.json();    
-				setSearchedRides(item);
-				break;
-			case "Date":
-				pog = await fetch(`https://lit-sands-95859.herokuapp.com/ride/rides/startDate=${date1},endDate=${date2}`); //update to get two dates, start and beginning
-				item = await pog.json();  
-				console.log(item);  
-				setSearchedRides(item);
-				break;
-			case "All":
-				break;
-			default:
-				console.log("ruh roh")
-		}
+	
+	function getDateTime(unixTime) {
+		let dateStr = new Date(unixTime * 1000).toString();
+		console.log('getdatetime unix time', unixTime)
+		dateStr = dateStr.substring(4, 15)
+		return dateStr
 	}
 
-	let inputFields;
-	if(type === "Date"){
-		inputFields =  
-			<MuiPickersUtilsProvider utils={DateFnsUtils}>
-				<Grid container justify="space-around">
-					<KeyboardDatePicker
-						margin="normal"
-						id="date-picker-dialog"
-						label="Start Date"
-						format="MM/dd/yyyy"
-						value={date1}
-						onChange={handleDate1}
-						KeyboardButtonProps={{
-							'aria-label': 'change date',
-						}}
-					/>
-					<KeyboardDatePicker
-						margin="normal"
-						id="date-picker-dialog"
-						label="End Date"
-						format="MM/dd/yyyy"
-						value={date2}
-						onChange={handleDate2}
-						KeyboardButtonProps={{
-							'aria-label': 'change date',
-						}}
-					/>
-				</Grid>
-			</MuiPickersUtilsProvider>
-
-	}else if(type === "Location"){
-		 inputFields = 
-			<>
-				<TextField id="filled-basic" label="Location" variant="filled" /> 
-				<FormHelperText>Enter requested Location</FormHelperText>
-			</>
-	}else{
-		inputFields =
-			<>
-				<TextField id="filled-basic" label="RideID" variant="filled" /> 
-				<FormHelperText>Enter requested ID</FormHelperText>
-			</> 
+	function unixToDateString(rideList) {
+		rideList.map(ride => console.log('ride in ridelist', ride))
+		let rides = rideList.map(ride => (Object.assign({}, {
+				...ride,
+				startTime: getDateTime(ride.startTime), 
+				endTime: getDateTime(ride.endTime),
+			}))
+		)
+		console.log('formatting dateTime searchpage 205', rides)
+		return rides	
 	}
 	
-	console.log('length of favorite rides searchpage 205', favoriteRides)
+	const getFavoriteRides = async () => {
+		let favIds = ['15692', '16380']; // create this from a get request
+		return Promise.all(favIds.map(item => 
+			RideAPI.getRideById(item)
+			.then(res => {
+				if (res.status) {
+					return res.data
+				} 
+			})))
+	}
 
+	function handleDate1(e) {	setStartTime(e) }
+	function handleDate2(e) { setEndTime(e) }
+	function handleLocationChange(e) { setLocation(e.target.value) }
 
+	let inputFields = 
+		<MuiPickersUtilsProvider utils={DateFnsUtils}>
+			<Grid container justify="space-around">
+				<KeyboardDatePicker
+					margin="normal"
+					id="date-picker-dialog"
+					label="Start Date"
+					format="MM/dd/yyyy"
+					value={startTime}
+					onChange={handleDate1}
+					KeyboardButtonProps={{
+						'aria-label': 'change date',
+					}}
+				/>
+				<KeyboardDatePicker
+					margin="normal"
+					id="date-picker-dialog"
+					label="End Date"
+					format="MM/dd/yyyy"
+					value={endTime}
+					onChange={handleDate2}
+					KeyboardButtonProps={{
+						'aria-label': 'change date',
+					}}
+				/>
+			</Grid>
+			<TextField onChange={handleLocationChange} id="filled-basic" label="Location" variant="filled" /> 
+			<FormHelperText>Enter requested Location</FormHelperText>
+		</MuiPickersUtilsProvider>
+	
 	//return form with component
 	return (
 		<div className="search-page">
@@ -212,65 +264,86 @@ export default function Searches({ history }){
 			</h1>
 
 			<div className="body">
-
-{/* for some reason this is only rendering one entry and i dont know why */}
-        <div className="list-container">
-					{favoriteRides.length > 0 && favoriteRides.map(ride => {
-						console.log(ride)
-						return <div key={ride.rideId} className="ride-entry" onClick={() => selectRide(ride.rideId)}>
+				<div className="list-container">
+					<h2 className="list-container__title">Favorite Rides</h2>
+					{favoriteRides && favoriteRides.map(ride => (
+					<div 
+						key={ride.rideId} 
+						className="ride-entry" 
+						onClick={() => selectRide(ride.rideId, 'favorite')}
+					>
 						<div className="ride-entry__ride-name">
 							<div>{ride.rideId}</div>
-							<div>{ride.loc3}</div>
+							<div>{ride.startTime}</div>
 						</div>
-						<div>
-							{ride.startTime}
+						<div className="ride-entry__ride-location">
+							{ride.loc1}
 						</div>
-					</div>
-				}
-					)}
-					
-        </div>
+					</div>		
+					))}
+				</div>
 
 				<div className="list-container">
           <div className="scroll-view">
-            {searchedRides && searchedRides.map(ride => (
-              <div key={ride.rideId} onClick={() => selectRide(ride.rideId)}>{ride.rideId + ' ' + ride.startTime + ' ' + ride.loc3}</div>
+						<h2 className="list-container__title">Search Results</h2>
+						{errorMsg !== "" && 
+							<div style={{color: 'black'}}>{errorMsg}</div>
+						}
+						{searchedRides && searchedRides.map(ride => (
+							<div 
+								key={ride.rideId} 
+								className="ride-entry" 
+								onClick={() => selectRide(ride.rideId, 'search')}
+							>
+							<div className="ride-entry__ride-name">
+								<div>{ride.rideId}</div>
+								<div>{ride.startTime}</div>
+							</div>
+							<div className="ride-entry__ride-location">
+								{ride.loc1}
+							</div>
+						</div>		
             ))}
           </div>
 				</div>
 
-				<div className="col-2" id="interface">
-					<Card className={classes.card} variant="outlined">
+				<div className="list-container">
+					<Card className={classes.card}>
+						<h2 className="list-container__title">Quick Search</h2>
 						<CardContent>
-
-							<form onSubmit={handleSubmit} className={classes.root}>
-								<FormControl className={classes.formControl}>
-									<InputLabel id="demo-simple-select-helper-label">RideID</InputLabel>
-									<Select
-										labelId="demo-simple-select-helper-label"
-										id="demo-simple-select-helper"
-										value={type}
-										onChange={handleTypeChange}
-									>
-										<MenuItem value="RideID">RideID</MenuItem>
-										<MenuItem value="Location">Location</MenuItem>
-										<MenuItem value="Date">Date</MenuItem>
-										<MenuItem value="Random">Random</MenuItem>
-									</Select>
-									<FormHelperText>Choose Type of Ride to Request</FormHelperText>
+							<form onSubmit={(e) => handleSubmit(e, 'rideId')}>
+								<FormControl>
+									<div>
+										<InputLabel htmlFor="component-simple">RideID</InputLabel>
+										<Input
+											type="text"
+											id="component-simple"
+											value={rideID}
+											onClick={() => setErrorMsg('')}
+											onChange={(e) => {
+												e.preventDefault();
+												setRideID(e.target.value);
+											}}
+											onKeyPress={(e) => handleKeySubmit(e, 'rideId')}
+										/>
+										<Button variant="outlined" type="submit">Search</Button>
+									</div>
 								</FormControl>
-
+							</form>
+						</CardContent>
+					</Card>   
+													
+					<Card className={classes.card}>
+						<h2 className="list-container__title">Find your session</h2>
+						<CardContent>
+							<form onSubmit={(e) => handleSubmit(e, 'filter')} className={classes.root}>
 								{inputFields}
-
 								<Button variant="outlined" type="submit" >Submit</Button>
-
 							</form>
 						</CardContent>
 					</Card>                   
 				</div>
 			</div>
-
 		</div>
 	)
-
 }

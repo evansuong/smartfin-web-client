@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export default function UserPage() {
+export default function UserPage({ history }) {
 
     
 
@@ -10,9 +10,9 @@ export default function UserPage() {
             <h1>
                 user info page
             </h1>
-            <Link to="/main">
+            <button onClick={() => history.goBack()}>
                 back
-            </Link>
+            </button>
         </div>
         
     )

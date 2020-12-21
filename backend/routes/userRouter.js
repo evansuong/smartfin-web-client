@@ -33,11 +33,13 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-
     const user = await login.login(email, password);
-
-    if (user == null)
+    
+    if (user === null)
       return res.status(400).json({ msg: "Check email/password" });
+    if (user.hasOwnProperty("msg")) 
+      return res.status(400).json({ msg: "Not all fields filled" });
+    
 
     const token = jwt.sign({ id: user._id }, config.jwt_token);
     res.json({

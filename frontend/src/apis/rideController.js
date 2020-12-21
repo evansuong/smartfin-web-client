@@ -1,23 +1,31 @@
-
+import axios from 'axios'
 
 const RideAPI = {
   getRideById: 
-  function(rideId) {
-    console.log(rideId)
-  },
+    async function(rideId) {
+      return axios.get(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/rideId=${rideId}`)
+      .then(res => onSuccess(res))
+      .catch(err => onError(err))
+    },
   getRideByLocation: 
-  function(location) {
-    console.log(location)
-  },
+    async function(location) {
+      return axios.get(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/location=${location}`)
+      .then(res => onSuccess(res))
+      .catch(err => onError(err))
+    },
   getRideByTime:
-  function(startTime, endTime) {
-    console.log(startTime, endTime)
-  },
+    async function(startTime, endTime) {
+      return axios.get(`http://ec2-54-203-7-235.us-west-2.compute.amazonaws.com/ride/rides/startDate=${startTime},endDate=${endTime}`)
+      .then(res => onSuccess(res))
+      .catch(err => onError(err))
+    },
   getRideByTimeAndLocation:
-  function(startTime, endTime, location) {
-    this.getRideByLocation(location)
-    this.getRideByTime(startTime, endTime)
-  }
+    async function(startTime, endTime, location) {
+      let locations = await this.getRideByLocation(location)
+      let times = await this.getRideByTime(startTime, endTime)
+      console.log(locations)
+      console.log(times)
+    }
 }
 
 

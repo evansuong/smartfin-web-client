@@ -27,7 +27,7 @@ a {
 }
 
 .footer {
-  background-color: rgba(0, 0, 0, .78);
+  background-color: rgb(0, 0, 0);
   padding: 40px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -45,6 +45,18 @@ a {
   flex-direction: column;
   justify-content: center;
   justify-self: right;
+  align-items: flex-end;
+}
+
+.link-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.footer-link-icon {
+  width: 35px;
+  height: 35px;
+  margin: 5px 10px;
 }
 
 @media(max-width: 768px) {

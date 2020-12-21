@@ -89,13 +89,13 @@ export default function StartPage({ history }) {
 			</div>
 
 			<div className="start-page__info-panel">
+				<p className="info-panel__description">{projectMessage}</p>
 				<iframe className="video"
 					title="REU Video"
 					src="https://www.youtube.com/embed/rY145HV-ReM" 
 					frameborder="0" 
 					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope;" 
 				/>
-				<p className="info-panel__description">{projectMessage}</p>
 			</div>
 		</div>
 	)
